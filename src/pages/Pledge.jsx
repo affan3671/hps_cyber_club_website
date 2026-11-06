@@ -83,11 +83,47 @@ export default function Pledge() {
     dateStyle: 'long',
   }).format(new Date());
 
+  // Site-wide isolated certificate printing handler
+  const handlePrintCertificate = () => {
+    document.body.classList.add('print-certificate-active');
+
+    const cleanup = () => {
+      document.body.classList.remove('print-certificate-active');
+      window.removeEventListener('afterprint', cleanup);
+    };
+
+    window.addEventListener('afterprint', cleanup);
+
+    setTimeout(() => {
+      window.print();
+      setTimeout(cleanup, 2000);
+    }, 50);
+  };
+
+  // Keyboard shortcut Ctrl+P / Cmd+P listener to automatically isolate certificate if unlocked
+  useEffect(() => {
+    const handleBeforePrint = () => {
+      if (isAllChecked) {
+        document.body.classList.add('print-certificate-active');
+      }
+    };
+    const handleAfterPrint = () => {
+      document.body.classList.remove('print-certificate-active');
+    };
+
+    window.addEventListener('beforeprint', handleBeforePrint);
+    window.addEventListener('afterprint', handleAfterPrint);
+    return () => {
+      window.removeEventListener('beforeprint', handleBeforePrint);
+      window.removeEventListener('afterprint', handleAfterPrint);
+    };
+  }, [isAllChecked]);
+
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-12">
       
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
+      <div className="text-center max-w-3xl mx-auto space-y-4 no-print">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/40 text-xs font-mono text-emerald-400">
           <ShieldCheck className="w-3.5 h-3.5" />
           <span>OFFICIAL CYBER SAFETY COMMITMENT</span>
@@ -101,7 +137,7 @@ export default function Pledge() {
       </div>
 
       {/* Progress & Quick Actions Bar */}
-      <div className="glass-panel p-4 rounded-xl border border-cyan-500/20 flex flex-wrap items-center justify-between gap-4">
+      <div className="glass-panel p-4 rounded-xl border border-cyan-500/20 flex flex-wrap items-center justify-between gap-4 no-print">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center font-display font-bold text-sm text-cyan-300">
             {checkedCount}/{totalItems}
@@ -135,7 +171,7 @@ export default function Pledge() {
       </div>
 
       {/* Interactive Pledge Checklist */}
-      <div className="space-y-3">
+      <div className="space-y-3 no-print">
         {PLEDGE_ITEMS.map((item, idx) => {
           const isChecked = !!checkedItems[item.id];
           const isFinal = item.isFinal;
@@ -183,7 +219,7 @@ export default function Pledge() {
       <div className="pt-6 border-t border-slate-800 space-y-6">
         
         {/* Input Name field */}
-        <div className="glass-panel p-5 rounded-2xl border border-cyan-500/20 max-w-xl mx-auto space-y-2">
+        <div className="glass-panel p-5 rounded-2xl border border-cyan-500/20 max-w-xl mx-auto space-y-2 no-print">
           <label htmlFor="student-name" className="block text-xs font-mono uppercase tracking-wider text-cyan-300">
             Enter Your Full Name to Personalize Certificate:
           </label>
@@ -218,17 +254,20 @@ export default function Pledge() {
                 className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-[#0B1528] via-[#070E1A] to-[#0B1528] border-2 border-cyan-400 p-8 sm:p-12 shadow-[0_0_50px_rgba(0,229,255,0.25)] text-center space-y-6"
               >
                 {/* Decorative Indian Tri-Color subtle line */}
-                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#FF9933] via-white to-[#138808]" />
+                <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#FF9933] via-white to-[#138808]" />
 
                 {/* Badge & School Header */}
-                <div className="flex flex-col items-center justify-center space-y-2">
+                <div className="flex flex-col items-center justify-center space-y-2 pt-2">
                   <ShieldLogo className="w-16 h-16 animate-pulse" />
-                  <h3 className="font-display font-extrabold text-xs uppercase tracking-widest text-cyan-400">
+                  <h3 className="font-display font-extrabold text-xs uppercase tracking-widest text-[#00E5FF]">
                     Hamdard Public School • Cyber Shield Club
                   </h3>
                   <h2 className="font-display font-black text-2xl sm:text-4xl text-white tracking-tight">
                     CERTIFICATE OF CYBER SAFETY COMMITMENT
                   </h2>
+                  <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">
+                    Verification ID: HPS-CS-PLEDGE-{new Date().getFullYear()}-OK
+                  </span>
                 </div>
 
                 {/* Recipient Statement */}
@@ -236,26 +275,26 @@ export default function Pledge() {
                   <p className="text-xs sm:text-sm text-slate-400 uppercase font-mono tracking-wider">
                     This is proudly presented to
                   </p>
-                  <p className="font-display font-black text-2xl sm:text-4xl text-cyan-300 drop-shadow-[0_0_15px_rgba(0,229,255,0.5)]">
+                  <p className="font-display font-black text-2xl sm:text-4xl text-[#00E5FF] drop-shadow-[0_0_15px_rgba(0,229,255,0.5)]">
                     {studentName.trim() || 'Valued Student Ambassador'}
                   </p>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed pt-2">
+                  <p className="text-xs sm:text-sm text-slate-200 leading-relaxed pt-2">
                     for upholding the national principles of cyber hygiene, zero credential sharing, vigilant scam verification, and committing to:
                   </p>
-                  <p className="font-display font-bold text-base sm:text-lg text-emerald-400 tracking-wide">
+                  <p className="font-display font-bold text-base sm:text-lg text-[#39FF88] tracking-wide">
                     "Stop. Think. Then Take Action."
                   </p>
                 </div>
 
                 {/* Footer Stamp & Date */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center pt-2 text-xs font-mono text-slate-400">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center pt-2 text-xs font-mono text-slate-300">
                   <div>
                     <span className="text-slate-400 block text-[11px]">ISSUED BY</span>
                     <span className="text-white font-bold">Cyber Shield HPS</span>
                   </div>
                   <div>
                     <span className="text-slate-400 block text-[11px]">DATE OF PLEDGE</span>
-                    <span className="text-cyan-300 font-bold">{todayFormatted}</span>
+                    <span className="text-[#00E5FF] font-bold">{todayFormatted}</span>
                   </div>
                   <div>
                     <span className="text-slate-400 block text-[11px]">COMMUNITY</span>
@@ -264,17 +303,21 @@ export default function Pledge() {
                 </div>
 
                 {/* Jai Hind Celebration Sign-off */}
-                <div className="pt-4">
-                  <span className="inline-block px-5 py-2 rounded-full bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 font-display font-bold text-sm tracking-widest shadow-glow-green">
+                <div className="pt-2 flex flex-col items-center justify-center gap-1.5">
+                  <span className="inline-block px-5 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/50 text-[#39FF88] font-display font-bold text-sm tracking-widest shadow-glow-green">
                     🇮🇳 JAI HIND! 🇮🇳
                   </span>
+                  <p className="text-[10px] font-mono text-slate-400 pt-1">
+                    Guided by the Ministry of Home Affairs / I4C • Toll-Free Emergency Helpline: 1930
+                  </p>
                 </div>
               </div>
 
               {/* Print Button */}
-              <div className="flex justify-center">
+              <div className="flex justify-center no-print">
                 <button
-                  onClick={() => window.print()}
+                  type="button"
+                  onClick={handlePrintCertificate}
                   className="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-display font-bold text-sm flex items-center gap-2 shadow-glow-cyan transition-all cursor-pointer"
                 >
                   <Printer className="w-4 h-4" />
@@ -287,7 +330,7 @@ export default function Pledge() {
       </div>
 
       {/* Official Mandatory Credit Line */}
-      <div className="p-4 rounded-xl bg-[#070E1A] border border-slate-800 text-center space-y-1">
+      <div className="p-4 rounded-xl bg-[#070E1A] border border-slate-800 text-center space-y-1 no-print">
         <p className="text-xs text-slate-400">
           Pledge text by the{' '}
           <a

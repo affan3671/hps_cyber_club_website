@@ -89,3 +89,150 @@
   }
 }
 
+/* ==========================================================================
+   PRINT STYLES: Dedicated isolated printing for Certificates & Result Cards
+   ========================================================================== */
+@media print {
+  /* Enforce exact background colors, borders, and gradients in PDF and paper */
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Universal site-wide chrome suppression */
+  header,
+  footer,
+  aside,
+  nav,
+  canvas,
+  .no-print,
+  button,
+  .btn-cyber-primary,
+  .cyber-grid,
+  .cyber-radial-overlay {
+    display: none !important;
+  }
+
+  html,
+  body {
+    background: #050B14 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+  }
+
+  /* --------------------------------------------------------------------------
+     1. PLEDGE CERTIFICATE ISOLATED PRINTING
+     -------------------------------------------------------------------------- */
+  body.print-certificate-active {
+    background: #070e1a !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* Hide everything on the whole document */
+  body.print-certificate-active * {
+    visibility: hidden !important;
+  }
+
+  /* Make ONLY the certificate frame visible */
+  body.print-certificate-active #pledge-certificate,
+  body.print-certificate-active #pledge-certificate * {
+    visibility: visible !important;
+  }
+
+  body.print-certificate-active #pledge-certificate {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100vw !important;
+    height: 98vh !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 24px 36px !important;
+    border: 3px solid #00E5FF !important;
+    border-radius: 20px !important;
+    outline: 2px solid rgba(0, 229, 255, 0.4) !important;
+    outline-offset: -8px !important;
+    background: linear-gradient(180deg, #0B1528 0%, #070E1A 50%, #0B1528 100%) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
+    z-index: 99999999 !important;
+  }
+
+  body.print-certificate-active #pledge-certificate h2 {
+    color: #ffffff !important;
+  }
+
+  body.print-certificate-active #pledge-certificate h3 {
+    color: #00E5FF !important;
+  }
+
+  /* --------------------------------------------------------------------------
+     2. DEFENDER RESULT CARD ISOLATED PRINTING
+     -------------------------------------------------------------------------- */
+  body.print-result-active {
+    background: #070e1a !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body.print-result-active * {
+    visibility: hidden !important;
+  }
+
+  body.print-result-active #defender-result-card,
+  body.print-result-active #defender-result-card * {
+    visibility: visible !important;
+  }
+
+  body.print-result-active #defender-result-card {
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90% !important;
+    max-width: 600px !important;
+    margin: 0 auto !important;
+    padding: 32px !important;
+    box-sizing: border-box !important;
+    border: 3px solid #00E5FF !important;
+    border-radius: 20px !important;
+    outline: 1.5px solid rgba(0, 229, 255, 0.4) !important;
+    outline-offset: -6px !important;
+    background: #0B1528 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    z-index: 99999999 !important;
+  }
+
+  /* Prevent page breaks inside generic cards on other pages */
+  .glass-panel,
+  article,
+  section {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}
+
+@page {
+  margin: 6mm;
+}
+
