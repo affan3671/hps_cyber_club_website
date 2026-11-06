@@ -41,8 +41,24 @@ export default function PracticeZone() {
   const handlePrintResultCard = () => {
     document.body.classList.add('print-result-active');
 
+    let printStyle = document.getElementById('print-page-style');
+    if (!printStyle) {
+      printStyle = document.createElement('style');
+      printStyle.id = 'print-page-style';
+      document.head.appendChild(printStyle);
+    }
+    printStyle.innerHTML = `
+      @page {
+        size: A4 portrait;
+        margin: 8mm;
+      }
+    `;
+
     const cleanup = () => {
       document.body.classList.remove('print-result-active');
+      if (printStyle) {
+        printStyle.remove();
+      }
       window.removeEventListener('afterprint', cleanup);
     };
 
@@ -50,16 +66,32 @@ export default function PracticeZone() {
 
     setTimeout(() => {
       window.print();
-      setTimeout(cleanup, 2000);
+      setTimeout(cleanup, 2500);
     }, 50);
   };
 
   useEffect(() => {
     const handleBeforePrint = () => {
       document.body.classList.add('print-result-active');
+      let printStyle = document.getElementById('print-page-style');
+      if (!printStyle) {
+        printStyle = document.createElement('style');
+        printStyle.id = 'print-page-style';
+        document.head.appendChild(printStyle);
+      }
+      printStyle.innerHTML = `
+        @page {
+          size: A4 portrait;
+          margin: 8mm;
+        }
+      `;
     };
     const handleAfterPrint = () => {
       document.body.classList.remove('print-result-active');
+      const printStyle = document.getElementById('print-page-style');
+      if (printStyle) {
+        printStyle.remove();
+      }
     };
 
     window.addEventListener('beforeprint', handleBeforePrint);
@@ -67,6 +99,10 @@ export default function PracticeZone() {
     return () => {
       window.removeEventListener('beforeprint', handleBeforePrint);
       window.removeEventListener('afterprint', handleAfterPrint);
+      const printStyle = document.getElementById('print-page-style');
+      if (printStyle) {
+        printStyle.remove();
+      }
     };
   }, []);
 

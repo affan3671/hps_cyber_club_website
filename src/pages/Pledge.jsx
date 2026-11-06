@@ -87,8 +87,25 @@ export default function Pledge() {
   const handlePrintCertificate = () => {
     document.body.classList.add('print-certificate-active');
 
+    // Force A4 landscape dimensions for the certificate print
+    let printStyle = document.getElementById('print-page-style');
+    if (!printStyle) {
+      printStyle = document.createElement('style');
+      printStyle.id = 'print-page-style';
+      document.head.appendChild(printStyle);
+    }
+    printStyle.innerHTML = `
+      @page {
+        size: A4 landscape;
+        margin: 6mm;
+      }
+    `;
+
     const cleanup = () => {
       document.body.classList.remove('print-certificate-active');
+      if (printStyle) {
+        printStyle.remove();
+      }
       window.removeEventListener('afterprint', cleanup);
     };
 
@@ -96,7 +113,7 @@ export default function Pledge() {
 
     setTimeout(() => {
       window.print();
-      setTimeout(cleanup, 2000);
+      setTimeout(cleanup, 2500);
     }, 50);
   };
 
@@ -105,10 +122,26 @@ export default function Pledge() {
     const handleBeforePrint = () => {
       if (isAllChecked) {
         document.body.classList.add('print-certificate-active');
+        let printStyle = document.getElementById('print-page-style');
+        if (!printStyle) {
+          printStyle = document.createElement('style');
+          printStyle.id = 'print-page-style';
+          document.head.appendChild(printStyle);
+        }
+        printStyle.innerHTML = `
+          @page {
+            size: A4 landscape;
+            margin: 6mm;
+          }
+        `;
       }
     };
     const handleAfterPrint = () => {
       document.body.classList.remove('print-certificate-active');
+      const printStyle = document.getElementById('print-page-style');
+      if (printStyle) {
+        printStyle.remove();
+      }
     };
 
     window.addEventListener('beforeprint', handleBeforePrint);
@@ -116,6 +149,10 @@ export default function Pledge() {
     return () => {
       window.removeEventListener('beforeprint', handleBeforePrint);
       window.removeEventListener('afterprint', handleAfterPrint);
+      const printStyle = document.getElementById('print-page-style');
+      if (printStyle) {
+        printStyle.remove();
+      }
     };
   }, [isAllChecked]);
 
