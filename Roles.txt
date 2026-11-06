@@ -1,0 +1,147 @@
+================================================================================
+                    CYBER SHIELD HPS - CLUB ROLES & HIERARCHY
+                           HAMDARD PUBLIC SCHOOL
+              "Stop. Think. Then Take Action." | Est. 2026
+================================================================================
+
+This document defines the organizational structure, duties, eligibility criteria,
+and responsibilities for all faculty and student leadership positions in the
+Cyber Shield HPS Cybersecurity Awareness Club.
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Faculty Advisory & Patronage
+2. Executive Council (Student Leadership)
+3. Technical & Defense Wing
+4. Awareness & Events Wing
+5. Media, Design & Editorial Wing
+6. Class Ambassadors & Peer Sentinels
+7. Club Code of Conduct & Ethical Creed
+
+================================================================================
+1. FACULTY ADVISORY & PATRONAGE
+================================================================================
+
+1.1 CLUB PATRON (PRINCIPAL / VICE-PRINCIPAL)
+    - Status: Ex-Officio Patron
+    - Responsibility:
+      * Overall institutional sanction and school policy alignment.
+      * Final authority on inter-school competitions, guest speaker invitations,
+        and external Ministry (MHA / I4C / CBSE) circular implementations.
+
+1.2 TEACHER COORDINATOR (FACULTY IN-CHARGE)
+    - Eligibility: Senior Faculty, Department of Computer Science / IT
+    - Key Responsibilities:
+      * Direct supervision and mentorship of the Student Executive Council.
+      * Overseeing monthly "Cyber Jagrookta Diwas" (CJD) observance sessions.
+      * Managing the formal communication channel with school administration.
+      * Reviewing all club awareness collateral before public display or distribution.
+      * Ensuring zero-tolerance for misuse of cyber skills or unauthorized tools.
+
+================================================================================
+2. EXECUTIVE COUNCIL (STUDENT LEADERSHIP)
+================================================================================
+
+2.1 STUDENT PRESIDENT (CLUB HEAD)
+    - Key Responsibilities:
+      * Chief student spokesperson and leader of Cyber Shield HPS.
+      * Coordinates with the Teacher Mentor for school-wide assembly addresses.
+      * Delegates tasks across the Technical, Events, and Creative wings.
+
+2.2 STUDENT VICE-PRESIDENT (STUDENT VC / CO-HEAD)
+    - Key Responsibilities:
+      * Steps into the presidential duties in the absence of the President.
+      * Leads internal project tracking and inter-wing collaboration.
+      * Mentors junior members and Grade Ambassadors (Grades VI-X).
+      * Assists in formulating the agenda for Cyber Jagrookta Diwas.
+      * Prepares for presidential succession in the upcoming academic session.
+
+2.3 GENERAL SECRETARY (OPERATIONS & DOCUMENTATION)
+      * Maintains official club records, attendance rosters, and meeting minutes.
+      * Compiles the Annual Cyber Safety Report for school archives.
+      * Drafts official circulars, event announcements, and permission requests.
+
+================================================================================
+3. TECHNICAL & DEFENSE WING
+================================================================================
+
+3.1 TECHNICAL & WEB LEAD
+      * Maintains the club website (React + Vite + Tailwind CSS static codebase).
+      * Updates content data files (/src/data/*.js) with new scams, URLs, and alerts.
+      * Ensures zero personal data collection across all interactive quizzes and tools.
+      * Manages GitHub repository deployments (GitHub Pages / Vercel / Netlify).
+    - Technical Skills: HTML, CSS, JavaScript, React, Git, web accessibility standards.
+
+3.2 CYBER DEFENSE & SIMULATION LEAD
+    - Key Responsibilities:
+      * Curates realistic scam scenarios (SMS, WhatsApp, fake portals, phishing links)
+        for the "Spot the Scam" interactive simulator.
+      * Designs non-destructive demonstrations (e.g., how URL spoofing works,
+        why UPI PINs are only for debit, and password hash entropy).
+      * Researches emerging scam patterns flagged by MHA / I4C / @Cyberdost.
+
+================================================================================
+4. AWARENESS & EVENTS WING
+================================================================================
+
+4.1 CYBER JAGROOKTA DIWAS (CJD) COORDINATOR
+      * Orchestrates the school's monthly observance on the first Wednesday of
+        every month as mandated by CBSE / Ministry of Home Affairs.
+      * Collects feedback and common questions raised by students across sections.
+
+
+================================================================================
+5. MEDIA, DESIGN & EDITORIAL WING
+================================================================================
+
+5.1 CREATIVE & DESIGN LEAD
+      * Creates high-impact visual infographics, notice-board posters, and flyers.
+      * Standardizes the visual identity (neon cyan, electric green, dark navy theme).
+      * Designs presentation slide decks and digital badge graphics for the club.
+    - Tools: Canva, Figma, Adobe Photoshop / Illustrator, or GIMP.
+
+5.2 EDITORIAL & CONTENT LEAD
+    - Key Responsibilities:
+      * Writes student-friendly, jargon-free explanations of complex cyber threats.
+      * Drafts the club newsletter / bulletin board corner ("Scam of the Month").
+      * Curates student-written essays, poems, and safety reflections.
+
+================================================================================
+6. CLASS AMBASSADORS & PEER SENTINELS
+================================================================================
+
+6.1 SENIOR WING AMBASSADORS
+    - Role: First point of peer support for senior students regarding account
+      takeover, gaming cheats, phishing, and cyberbullying.
+
+6.2 MIDDLE WING AMBASSADORS
+    - Role: Promoting safe smartphone usage, social media privacy controls,
+      anti-cyberbullying vigilance, and reporting suspicious group links.
+
+================================================================================
+7. CLUB CODE OF CONDUCT & ETHICAL CREED
+================================================================================
+
+Every appointed member of Cyber Shield HPS must abide by the following creed:
+
+1. DEFENSE ONLY (WHITE-HAT PRINCIPLE):
+   Knowledge acquired through the club must NEVER be used to breach, bypass,
+   disrupt, prank, or inspect systems belonging to the school, classmates,
+   or any third party without explicit, documented legal authorization.
+
+2. ZERO VICTIM BLAMING:
+   If a classmate or student falls victim to a scam or online harassment, members
+   must offer empathetic support, strict confidentiality, and guide them directly
+   to a trusted teacher mentor or Helpline 1930.
+
+3. OFFICIAL ESCALATION PATH:
+   In case of severe threats (blackmail, extortion, impersonation, or deepfakes),
+   members must immediately escalate the incident to the Teacher In-Charge and
+   School Management for formal reporting via cybercrime.gov.in.
+
+================================================================================
+THIS IS A DRAFT DOCUMENT AND HENCE DOES NOT HOLD ANY FINAL OR EFFECTIVE STANDING UNTIL APPROVED.
+Last Updated: November 2026
+================================================================================
+
