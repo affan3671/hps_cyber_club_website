@@ -1,33 +1,18 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  CheckCircle2, 
-  XCircle, 
-  AlertTriangle, 
-  RotateCcw, 
-  ArrowRight, 
-  MessageSquare, 
-  PhoneCall, 
-  Mail, 
-  ShieldCheck,
-  Smartphone,
-  Share2
-} from 'lucide-react';
-import confetti from 'canvas-confetti';
+import { RotateCcw } from 'lucide-react';
 import { SCAM_SCENARIOS } from '../data/quizData';
 
 export default function ScamQuiz({ onScoreUpdate }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null); // true = scam, false = real
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [userScore, setUserScore] = useState(0);
-  const [answeredMap, setAnsweredMap] = useState({});
   const [isCompleted, setIsCompleted] = useState(false);
 
   const scenario = SCAM_SCENARIOS[currentIndex];
   const total = SCAM_SCENARIOS.length;
 
   const handleChoice = (choice) => {
-    if (selectedAnswer !== null) return; // Prevent double answer
+    if (selectedAnswer !== null) return;
     setSelectedAnswer(choice);
 
     const isCorrect = choice === scenario.isScam;
@@ -36,14 +21,6 @@ export default function ScamQuiz({ onScoreUpdate }) {
     if (isCorrect) {
       setUserScore(nextScore);
     }
-
-    setAnsweredMap((prev) => ({
-      ...prev,
-      [scenario.id]: {
-        userChoice: choice,
-        isCorrect,
-      },
-    }));
 
     if (onScoreUpdate) {
       onScoreUpdate(nextScore, total);
@@ -56,15 +33,6 @@ export default function ScamQuiz({ onScoreUpdate }) {
       setSelectedAnswer(null);
     } else {
       setIsCompleted(true);
-      if (userScore >= total - 1) {
-        try {
-          confetti({
-            particleCount: 70,
-            spread: 60,
-            origin: { y: 0.6 },
-          });
-        } catch (e) {}
-      }
     }
   };
 
@@ -72,61 +40,38 @@ export default function ScamQuiz({ onScoreUpdate }) {
     setCurrentIndex(0);
     setSelectedAnswer(null);
     setUserScore(0);
-    setAnsweredMap({});
     setIsCompleted(false);
-  };
-
-  const getChannelBadge = (type) => {
-    switch (type) {
-      case 'sms':
-        return <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-blue-950/80 border border-blue-500/40 text-blue-300 text-xs font-mono"><Smartphone className="w-3.5 h-3.5" /> SMS</span>;
-      case 'whatsapp':
-        return <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs font-mono"><MessageSquare className="w-3.5 h-3.5" /> WhatsApp</span>;
-      case 'email':
-        return <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-purple-950/80 border border-purple-500/40 text-purple-300 text-xs font-mono"><Mail className="w-3.5 h-3.5" /> Email</span>;
-      case 'call':
-        return <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-red-950/80 border border-red-500/40 text-red-300 text-xs font-mono"><PhoneCall className="w-3.5 h-3.5" /> Incoming Call</span>;
-      default:
-        return null;
-    }
   };
 
   if (isCompleted) {
     const percentage = Math.round((userScore / total) * 100);
 
     return (
-      <div className="glass-panel p-8 rounded-3xl border border-cyan-400 text-center space-y-6 max-w-xl mx-auto shadow-glow-cyan">
-        <div className="w-20 h-20 rounded-full mx-auto flex items-center justify-center bg-cyan-500/10 border-2 border-cyan-400 text-cyan-300 text-3xl font-display font-extrabold">
+      <div className="p-6 text-center space-y-4 max-w-lg mx-auto">
+        <div className="w-16 h-16 rounded-full mx-auto flex items-center justify-center bg-[#111F38] text-cyber-cyan text-2xl font-bold border border-slate-700">
           {percentage}%
         </div>
 
         <div className="space-y-1">
-          <h3 className="font-display font-black text-2xl text-white">
-            {percentage >= 80 ? 'Master Scam Spotter! 🛡️' : percentage >= 50 ? 'Sharp Eyes, Stay Alert! 👀' : 'Keep Training, Rookie! 💡'}
+          <h3 className="font-display font-bold text-xl text-white">
+            Simulation complete
           </h3>
           <p className="text-xs sm:text-sm text-slate-300">
-            You accurately identified <strong>{userScore}</strong> out of <strong>{total}</strong> simulated communication vectors.
+            You accurately identified {userScore} out of {total} messages.
           </p>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#050B14] border border-slate-800 text-left font-mono text-xs space-y-2">
-          <p className="text-slate-400 uppercase tracking-wider text-[11px]">Quick Assessment Summary</p>
-          <p className="text-slate-200">
-            {percentage >= 80 
-              ? 'Excellent instincts! You catch subtle domain typos, urgency flags, and impersonation scripts with ease.'
-              : 'Remember: Real authorities never demand urgent secrecy or threaten digital arrest over video calls.'}
-          </p>
-        </div>
+        <p className="text-xs text-slate-400 bg-[#050B14] p-3 rounded-md border border-slate-800 text-left leading-relaxed">
+          Remember: Legitimate institutions never threaten legal arrest over WhatsApp or Skype, and banks never ask for passwords or OTPs over text messages.
+        </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <button
-            onClick={handleRestart}
-            className="px-6 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs font-mono flex items-center gap-2 cursor-pointer"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Retake Simulation</span>
-          </button>
-        </div>
+        <button
+          onClick={handleRestart}
+          className="px-4 py-2 rounded-md bg-[#111F38] hover:bg-slate-700 text-slate-200 font-medium text-xs flex items-center gap-2 mx-auto transition-colors"
+        >
+          <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
+          <span>Retake simulation</span>
+        </button>
       </div>
     );
   }
@@ -135,133 +80,112 @@ export default function ScamQuiz({ onScoreUpdate }) {
   const isCorrect = isAnswered && selectedAnswer === scenario.isScam;
 
   return (
-    <div className="space-y-6 max-w-2xl mx-auto">
+    <div className="space-y-4 max-w-2xl mx-auto">
       
-      {/* Top Tracker */}
-      <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-3">
+      {/* Tracker */}
+      <div className="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2.5">
         <span>Scenario {currentIndex + 1} of {total}</span>
-        <div className="flex items-center gap-2">
-          <span>Score: <strong className="text-cyan-400">{userScore}</strong></span>
-          <span>•</span>
-          <span>Difficulty: <strong className="text-amber-400">{scenario.difficulty}</strong></span>
+        <div className="flex items-center gap-3">
+          <span>Score: <strong className="text-white">{userScore}</strong></span>
+          <span>Difficulty: <strong className="text-slate-200">{scenario.difficulty}</strong></span>
         </div>
       </div>
 
-      {/* Realistic Communication Simulation Mockup */}
-      <div className="relative rounded-2xl border border-slate-700/80 bg-[#070E1A] overflow-hidden shadow-2xl">
+      {/* Message Box */}
+      <div className="rounded-md border border-slate-700 bg-[#070E1A] overflow-hidden">
         
-        {/* Device Top Bar */}
-        <div className="bg-[#0B1528] px-4 py-2.5 border-b border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400">
+        {/* Device Header */}
+        <div className="bg-[#0B1528] px-4 py-2 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400">
           <div className="flex items-center gap-2">
-            {getChannelBadge(scenario.type)}
-            <span className="text-white font-semibold truncate max-w-[200px] sm:max-w-xs">{scenario.sender}</span>
+            <span className="px-2 py-0.5 rounded bg-[#111F38] text-slate-200 text-[11px]">
+              {scenario.channel}
+            </span>
+            <span className="text-white font-medium truncate max-w-[200px] sm:max-w-xs">{scenario.sender}</span>
           </div>
-          <span className="text-[11px] text-slate-500">{scenario.timestamp}</span>
+          <span className="text-slate-500 text-[11px]">{scenario.timestamp}</span>
         </div>
 
-        {/* Message Container Body */}
-        <div className="p-6 space-y-4">
-          
+        {/* Content Body */}
+        <div className="p-5 space-y-3">
           {scenario.type === 'email' && (
-            <div className="border-b border-slate-800/80 pb-3 space-y-1 text-xs">
-              <span className="text-slate-500 font-mono">Subject: </span>
-              <span className="text-white font-bold">{scenario.subject}</span>
+            <div className="border-b border-slate-800 pb-2 text-xs">
+              <span className="text-slate-400">Subject: </span>
+              <span className="text-white font-medium">{scenario.subject}</span>
             </div>
           )}
 
           {scenario.type === 'call' ? (
-            <div className="space-y-4 text-center py-4">
-              <div className="w-16 h-16 rounded-full bg-red-500/20 text-red-400 mx-auto flex items-center justify-center animate-pulse border border-red-500/40">
-                <PhoneCall className="w-8 h-8" />
-              </div>
-              <div>
-                <p className="text-xs font-mono text-red-300 uppercase">Suspicious Voice Call Transcript</p>
-                <p className="text-white font-mono text-sm mt-1">{scenario.sender}</p>
-              </div>
-              <div className="p-4 rounded-xl bg-red-950/20 border border-red-500/30 text-xs sm:text-sm text-slate-200 italic leading-relaxed text-left font-serif">
+            <div className="space-y-2 py-2">
+              <p className="text-xs text-slate-400 font-medium">Caller transcript:</p>
+              <blockquote className="p-3.5 rounded-md bg-[#160B0E] border border-red-900/60 text-xs sm:text-sm text-slate-200 leading-relaxed">
                 {scenario.content}
-              </div>
+              </blockquote>
             </div>
           ) : (
-            <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs sm:text-sm text-slate-200 leading-relaxed font-sans space-y-2">
-              <p>{scenario.content}</p>
+            <div className="p-3.5 rounded-md bg-[#050B14] border border-slate-800 text-xs sm:text-sm text-slate-200 leading-relaxed">
+              {scenario.content}
             </div>
           )}
         </div>
 
-        {/* Action Prompt */}
+        {/* Buttons / Answer prompt */}
         {!isAnswered ? (
-          <div className="p-4 bg-[#0B1528] border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <span className="text-xs font-mono text-slate-300">
-              Is this message <strong>Real</strong> or a <strong>Scam</strong>?
+          <div className="p-3.5 bg-[#0B1528] border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <span className="text-xs text-slate-300">
+              Is this message real or a scam?
             </span>
 
-            <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="flex items-center gap-2.5 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={() => handleChoice(false)}
-                className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-emerald-950 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-300 font-bold text-xs font-mono transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                className="flex-1 sm:flex-initial px-4 py-2 rounded-md bg-[#070E1A] hover:bg-[#111F38] border border-slate-700 text-slate-200 text-xs font-medium transition-colors"
               >
-                <CheckCircle2 className="w-4 h-4" />
-                <span>Legitimate / Real</span>
+                Legitimate message
               </button>
 
               <button
                 type="button"
                 onClick={() => handleChoice(true)}
-                className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-red-950 hover:bg-red-900 border border-red-500/50 text-red-300 font-bold text-xs font-mono transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                className="flex-1 sm:flex-initial px-4 py-2 rounded-md bg-[#160B0E] hover:bg-[#2A0F14] border border-red-800/80 text-red-300 text-xs font-medium transition-colors"
               >
-                <AlertTriangle className="w-4 h-4" />
-                <span>It's a Scam!</span>
+                This is a scam
               </button>
             </div>
           </div>
         ) : (
-          /* Post-Answer Feedback Box */
-          <div className={`p-5 border-t space-y-4 ${
-            isCorrect 
-              ? 'bg-emerald-950/30 border-emerald-500/40' 
-              : 'bg-red-950/30 border-red-500/40'
+          /* Feedback Box */
+          <div className={`p-4 border-t space-y-3 text-xs sm:text-sm ${
+            isCorrect ? 'bg-[#091712] border-emerald-800/60' : 'bg-[#160B0E] border-red-800/60'
           }`}>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                {isCorrect ? (
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                ) : (
-                  <XCircle className="w-5 h-5 text-red-400" />
-                )}
-                <h4 className="font-display font-bold text-sm text-white">
-                  {isCorrect ? 'Correct Analysis! 🎯' : 'Incorrect Analysis! ⚠️'}
-                </h4>
-              </div>
-
-              <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase ${
-                scenario.isScam ? 'bg-red-900/60 text-red-300' : 'bg-emerald-900/60 text-emerald-300'
-              }`}>
-                Verdict: {scenario.isScam ? 'SCAM DETECTED' : 'LEGITIMATE COMMUNICATION'}
+              <span className={`font-semibold ${isCorrect ? 'text-emerald-400' : 'text-red-400'}`}>
+                {isCorrect ? 'Correct analysis' : 'Incorrect analysis'}
+              </span>
+              <span className="text-xs text-slate-300">
+                {scenario.isScam ? 'Identified as scam' : 'Identified as legitimate'}
               </span>
             </div>
 
-            <p className="text-xs text-slate-300 leading-relaxed bg-[#050B14]/70 p-3 rounded-lg border border-slate-800">
+            <p className="text-xs text-slate-300 leading-relaxed bg-[#050B14] p-3 rounded-md border border-slate-800">
               {scenario.explanation}
             </p>
 
-            <div className="space-y-1 text-[11px] font-mono">
-              <span className="text-slate-400 block font-bold">Key Indicators:</span>
-              <ul className="space-y-1 text-slate-300 pl-4 list-disc">
+            <div className="space-y-1 text-xs">
+              <span className="font-semibold text-slate-200">Key indicators:</span>
+              <ul className="list-disc pl-4 text-slate-300 space-y-0.5">
                 {scenario.clues.map((clue, idx) => (
                   <li key={idx}>{clue}</li>
                 ))}
               </ul>
             </div>
 
-            <div className="flex justify-end pt-2">
+            <div className="flex justify-end pt-1">
               <button
                 onClick={handleNext}
-                className="px-5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-display font-bold text-xs flex items-center gap-2 cursor-pointer shadow-glow-cyan"
+                className="px-4 py-1.5 rounded-md bg-cyber-cyan text-[#050B14] font-medium text-xs hover:bg-[#39FF88] transition-colors"
               >
-                <span>{currentIndex < total - 1 ? 'Next Scenario' : 'View Results'}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                {currentIndex < total - 1 ? 'Next scenario' : 'View results'}
               </button>
             </div>
           </div>
@@ -272,4 +196,3 @@ export default function ScamQuiz({ onScoreUpdate }) {
     </div>
   );
 }
-

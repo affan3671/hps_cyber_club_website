@@ -1,24 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Search, 
-  Filter, 
-  ChevronDown, 
-  ChevronUp, 
-  AlertTriangle, 
-  CheckCircle, 
-  ShieldAlert, 
-  ExternalLink,
-  Layers,
-  ArrowRight,
-  Info
-} from 'lucide-react';
+import { Search, ChevronDown, ChevronUp, AlertTriangle, CheckCircle, Info } from 'lucide-react';
 import { THREATS, THREAT_CATEGORIES } from '../data/threatsData';
 
 export default function Threats() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [expandedId, setExpandedId] = useState(THREATS[0].id); // First open by default
+  const [expandedId, setExpandedId] = useState(THREATS[0].id);
 
   const filteredThreats = useMemo(() => {
     return THREATS.filter((threat) => {
@@ -39,59 +26,51 @@ export default function Threats() {
   };
 
   return (
-    <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 space-y-8">
       
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-xs font-mono text-cyan-400">
-          <ShieldAlert className="w-3.5 h-3.5" />
-          <span>THREAT INTELLIGENCE & DECONSTRUCTION</span>
-        </div>
-        <h1 className="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
-          Know The Threat. <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">Outsmart The Trap.</span>
+      <div className="space-y-2 border-b border-slate-800 pb-6">
+        <h1 className="font-display font-bold text-2xl sm:text-4xl text-white">
+          Cyber threats
         </h1>
-        <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-          Explore the anatomy of the top cyber attacks aimed at teenagers and families. Learn how attackers think, spot subtle red flags, and master immediate defense habits.
+        <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-3xl">
+          Learn how online scams target students, how attackers try to gain trust or induce panic, and what to do when you encounter them.
         </p>
       </div>
 
-      {/* Search & Filter Controls */}
-      <div className="glass-panel p-4 sm:p-5 rounded-2xl border border-cyan-500/20 space-y-4">
-        <div className="flex flex-col md:flex-row items-center gap-4">
+      {/* Search and Category Filter */}
+      <div className="panel p-4 space-y-4">
+        <div className="flex flex-col md:flex-row items-center gap-3">
           
-          {/* Search Box */}
-          <div className="relative w-full md:w-96">
-            <Search className="w-4 h-4 text-cyan-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <div className="relative w-full md:w-80">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search threat, keyword, or red flag..."
-              className="w-full bg-[#050B14]/90 border border-slate-700 focus:border-cyan-400 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 font-sans"
+              placeholder="Search by threat, keyword, or warning sign..."
+              className="w-full bg-[#050B14] border border-slate-700 focus:border-cyber-cyan rounded-md pl-9 pr-3 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-white"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-white"
               >
                 Clear
               </button>
             )}
           </div>
 
-          {/* Category Chips */}
           <div className="flex items-center gap-1.5 flex-wrap w-full md:w-auto">
-            <span className="text-xs font-mono text-slate-400 mr-1 flex items-center gap-1">
-              <Filter className="w-3 h-3 text-cyan-400" /> Filter:
-            </span>
+            <span className="text-xs text-slate-400 mr-1">Category:</span>
             {THREAT_CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors ${
                   selectedCategory === cat
-                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-glow-cyan'
-                    : 'bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/60'
+                    ? 'bg-cyber-cyan text-[#050B14]'
+                    : 'bg-[#111F38] text-slate-300 hover:text-white hover:bg-slate-800'
                 }`}
               >
                 {cat}
@@ -101,181 +80,132 @@ export default function Threats() {
 
         </div>
 
-        {/* Results Counter */}
-        <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-t border-slate-800/80 pt-3">
-          <span>Showing {filteredThreats.length} threat blueprint{filteredThreats.length === 1 ? '' : 's'}</span>
-          <span>Click any card to inspect / collapse details</span>
+        <div className="flex items-center justify-between text-xs text-slate-400 border-t border-slate-800 pt-2.5">
+          <span>Showing {filteredThreats.length} {filteredThreats.length === 1 ? 'threat' : 'threats'}</span>
+          <span>Click any threat to read details</span>
         </div>
       </div>
 
-      {/* Threats Grid / Accordion */}
+      {/* Threats List */}
       {filteredThreats.length === 0 ? (
-        <div className="text-center py-16 glass-panel rounded-2xl border border-slate-800">
-          <Info className="w-10 h-10 text-cyan-400 mx-auto mb-3" />
-          <h3 className="text-white font-bold text-lg">No threats match your search</h3>
-          <p className="text-slate-400 text-xs mt-1">Try clearing your search query or selecting "All" categories.</p>
+        <div className="text-center py-12 panel space-y-2">
+          <Info className="w-6 h-6 text-slate-400 mx-auto" aria-hidden="true" />
+          <h2 className="text-white font-semibold text-base">No threats match your search</h2>
+          <p className="text-slate-400 text-xs">Try clearing your search query or selecting "All".</p>
           <button
             onClick={() => { setSearchQuery(''); setSelectedCategory('All'); }}
-            className="mt-4 px-4 py-2 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-xs font-mono hover:bg-cyan-500/30"
+            className="mt-2 px-3 py-1.5 rounded-md bg-[#111F38] hover:bg-slate-700 text-xs text-slate-200"
           >
-            Reset Filters
+            Reset filters
           </button>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {filteredThreats.map((threat) => {
             const isExpanded = expandedId === threat.id;
 
             return (
-              <motion.div
+              <div
                 key={threat.id}
-                layout
-                className={`glass-panel rounded-2xl border transition-all duration-300 overflow-hidden ${
-                  isExpanded 
-                    ? 'border-cyan-400/60 shadow-[0_0_30px_rgba(0,229,255,0.15)] bg-[#0B1528]/90' 
-                    : 'border-slate-800/90 hover:border-cyan-500/40 hover:bg-[#0B1528]/70'
+                className={`panel transition-colors ${
+                  isExpanded ? 'border-cyber-cyan/50 bg-[#0B1528]' : 'hover:border-slate-700'
                 }`}
               >
-                {/* Clickable Header Bar */}
                 <button
                   type="button"
                   onClick={() => toggleExpand(threat.id)}
                   aria-expanded={isExpanded}
-                  className="w-full text-left p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer focus:outline-none focus:bg-cyan-950/20"
+                  className="w-full text-left p-4 sm:p-5 flex items-start justify-between gap-4 cursor-pointer"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-xl bg-slate-900 border border-cyan-500/30 text-cyan-400 shrink-0">
-                      <ShieldAlert className="w-6 h-6" />
+                  <div className="space-y-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className={`px-2 py-0.5 rounded text-[11px] font-medium ${
+                        threat.severity === 'Critical'
+                          ? 'bg-red-950 text-red-300 border border-red-800/60'
+                          : 'bg-amber-950 text-amber-300 border border-amber-800/60'
+                      }`}>
+                        {threat.severity} severity
+                      </span>
+
+                      <span className="text-xs text-slate-400">
+                        {threat.category}
+                      </span>
                     </div>
 
-                    <div className="space-y-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase ${
-                          threat.severity === 'Critical'
-                            ? 'bg-red-950 text-red-300 border border-red-500/40'
-                            : 'bg-amber-950 text-amber-300 border border-amber-500/40'
-                        }`}>
-                          {threat.severity} Severity
-                        </span>
-
-                        <span className="text-slate-400 text-xs font-mono bg-slate-900/60 px-2 py-0.5 rounded border border-slate-800">
-                          {threat.category}
-                        </span>
-                      </div>
-
-                      <h3 className="font-display font-bold text-xl sm:text-2xl text-white">
-                        {threat.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-cyan-300 font-mono">
-                        {threat.subtitle}
-                      </p>
-                    </div>
+                    <h2 className="font-display font-bold text-lg sm:text-xl text-white">
+                      {threat.title}
+                    </h2>
+                    <p className="text-xs sm:text-sm text-slate-400">
+                      {threat.subtitle}
+                    </p>
                   </div>
 
-                  <div className="flex items-center gap-3 self-end md:self-center">
-                    <span className="text-xs font-mono text-slate-400 hidden sm:inline">
-                      {isExpanded ? 'Collapse' : 'Inspect Threat'}
-                    </span>
-                    <div className="p-2 rounded-lg bg-slate-800 text-cyan-400">
-                      {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-                    </div>
+                  <div className="p-1.5 rounded bg-[#111F38] text-slate-300 shrink-0 mt-1">
+                    {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </div>
                 </button>
 
-                {/* Expanded Details Pane */}
-                <AnimatePresence>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="border-t border-slate-800/80 px-5 sm:px-6 pb-6 pt-4 space-y-6"
-                    >
-                      {/* Quick Summary Pill */}
-                      <p className="text-slate-300 text-sm leading-relaxed bg-[#070E1A]/80 p-4 rounded-xl border-l-4 border-cyan-400">
-                        {threat.summary}
-                      </p>
+                {isExpanded && (
+                  <div className="border-t border-slate-800 p-4 sm:p-5 space-y-5 text-xs sm:text-sm">
+                    <p className="text-slate-200 leading-relaxed bg-[#070E1A] p-3.5 rounded-md border border-slate-800">
+                      {threat.summary}
+                    </p>
 
-                      {/* 2-Column Anatomy: What it is & How it works */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        
-                        {/* What it is */}
-                        <div className="space-y-2">
-                          <h4 className="font-display font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                            What It Is
-                          </h4>
-                          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-900/40 p-3.5 rounded-lg border border-slate-800">
-                            {threat.whatItIs}
-                          </p>
-                        </div>
-
-                        {/* How it works */}
-                        <div className="space-y-2">
-                          <h4 className="font-display font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-purple-400" />
-                            The Attack Blueprint
-                          </h4>
-                          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-900/40 p-3.5 rounded-lg border border-slate-800">
-                            {threat.howItWorks}
-                          </p>
-                        </div>
-
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <h3 className="font-semibold text-white">
+                          What it is
+                        </h3>
+                        <p className="text-slate-300 leading-relaxed">
+                          {threat.whatItIs}
+                        </p>
                       </div>
 
-                      {/* 2-Column Defense: Red Flags vs What To Do */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-                        
-                        {/* Red Flags */}
-                        <div className="space-y-3 bg-red-950/20 border border-red-500/30 p-4 rounded-xl">
-                          <h4 className="font-display font-bold text-xs uppercase tracking-wider text-red-300 flex items-center gap-2">
-                            <AlertTriangle className="w-4 h-4 text-red-400" />
-                            Red Flags To Watch For
-                          </h4>
-                          <ul className="space-y-2 text-xs text-slate-200">
-                            {threat.redFlags.map((flag, idx) => (
-                              <li key={idx} className="flex items-start gap-2">
-                                <span className="text-red-400 font-bold shrink-0">✕</span>
-                                <span className="leading-snug">{flag}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
+                      <div className="space-y-1.5">
+                        <h3 className="font-semibold text-white">
+                          How it works
+                        </h3>
+                        <p className="text-slate-300 leading-relaxed">
+                          {threat.howItWorks}
+                        </p>
+                      </div>
+                    </div>
 
-                        {/* What To Do */}
-                        <div className="space-y-3 bg-emerald-950/20 border border-emerald-500/30 p-4 rounded-xl">
-                          <h4 className="font-display font-bold text-xs uppercase tracking-wider text-emerald-300 flex items-center gap-2">
-                            <CheckCircle className="w-4 h-4 text-emerald-400" />
-                            Your Shield Protocol (What To Do)
-                          </h4>
-                          <ul className="space-y-2 text-xs text-slate-200">
-                            {threat.whatToDo.map((act, idx) => (
-                              <li key={idx} className="flex items-start gap-2">
-                                <span className="text-emerald-400 font-bold shrink-0">✓</span>
-                                <span className="leading-snug">{act}</span>
-                              </li>
-                            ))}
-                          </ul>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                      <div className="p-4 rounded-md bg-[#160B0E] border border-red-900/50 space-y-2">
+                        <div className="flex items-center gap-1.5 text-red-400 font-semibold text-xs">
+                          <AlertTriangle className="w-3.5 h-3.5" aria-hidden="true" />
+                          <span>Warning signs</span>
                         </div>
-
+                        <ul className="space-y-1.5 text-xs text-slate-200 list-disc pl-4 leading-relaxed">
+                          {threat.redFlags.map((flag, idx) => (
+                            <li key={idx}>{flag}</li>
+                          ))}
+                        </ul>
                       </div>
 
-                      {/* Footer Tip */}
-                      <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-800 text-xs font-mono text-slate-400">
-                        <span>Emergency immediate advice: Never react in panic. Stop. Think. Then Take Action.</span>
-                        <a
-                          href="tel:1930"
-                          className="text-red-400 hover:text-red-300 font-bold flex items-center gap-1"
-                        >
-                          Need urgent assistance? Dial 1930
-                        </a>
+                      <div className="p-4 rounded-md bg-[#091712] border border-emerald-900/50 space-y-2">
+                        <div className="flex items-center gap-1.5 text-emerald-400 font-semibold text-xs">
+                          <CheckCircle className="w-3.5 h-3.5" aria-hidden="true" />
+                          <span>What you should do</span>
+                        </div>
+                        <ul className="space-y-1.5 text-xs text-slate-200 list-disc pl-4 leading-relaxed">
+                          {threat.whatToDo.map((act, idx) => (
+                            <li key={idx}>{act}</li>
+                          ))}
+                        </ul>
                       </div>
+                    </div>
 
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
+                    <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                      <span>Never react in panic. Stop. Think. Then Take Action.</span>
+                      <a href="tel:1930" className="text-red-400 hover:underline">
+                        Need immediate assistance? Call 1930
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
@@ -284,4 +214,3 @@ export default function Threats() {
     </div>
   );
 }
-

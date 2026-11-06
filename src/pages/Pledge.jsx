@@ -1,18 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Check, 
-  ShieldCheck, 
-  Award, 
-  Printer, 
-  RotateCcw, 
-  ExternalLink,
-  Lock,
-  Sparkles
-} from 'lucide-react';
+import { Check, Printer, RotateCcw, ExternalLink } from 'lucide-react';
 import ShieldLogo from '../components/ShieldLogo';
-import { PLEDGE_ITEMS, PLEDGE_CREDIT } from '../data/pledgeData';
+import { PLEDGE_ITEMS } from '../data/pledgeData';
 
 export default function Pledge() {
   const [checkedItems, setCheckedItems] = useState({});
@@ -24,10 +14,7 @@ export default function Pledge() {
   const isAllChecked = checkedCount === totalItems;
 
   const toggleCheck = (id) => {
-    setCheckedItems((prev) => {
-      const next = { ...prev, [id]: !prev[id] };
-      return next;
-    });
+    setCheckedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   const checkAll = () => {
@@ -43,39 +30,17 @@ export default function Pledge() {
     setHasCelebrated(false);
   };
 
-  // Trigger celebration when all checked
   useEffect(() => {
     if (isAllChecked && !hasCelebrated) {
       setHasCelebrated(true);
-      
-      // Multi-stage confetti celebration
       try {
         confetti({
-          particleCount: 80,
-          spread: 70,
+          particleCount: 60,
+          spread: 60,
           origin: { y: 0.6 },
           colors: ['#00E5FF', '#39FF88', '#FF9933', '#FFFFFF', '#138808'],
         });
-
-        setTimeout(() => {
-          confetti({
-            particleCount: 50,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0 },
-            colors: ['#00E5FF', '#39FF88', '#8B5CF6'],
-          });
-          confetti({
-            particleCount: 50,
-            angle: 120,
-            spread: 55,
-            origin: { x: 1 },
-            colors: ['#00E5FF', '#39FF88', '#8B5CF6'],
-          });
-        }, 300);
-      } catch (err) {
-        // Fallback gracefully if canvas-confetti is not loaded
-      }
+      } catch (err) {}
     }
   }, [isAllChecked, hasCelebrated]);
 
@@ -83,11 +48,9 @@ export default function Pledge() {
     dateStyle: 'long',
   }).format(new Date());
 
-  // Site-wide isolated certificate printing handler
   const handlePrintCertificate = () => {
     document.body.classList.add('print-certificate-active');
 
-    // Force A4 landscape dimensions for the certificate print
     let printStyle = document.getElementById('print-page-style');
     if (!printStyle) {
       printStyle = document.createElement('style');
@@ -117,7 +80,6 @@ export default function Pledge() {
     }, 50);
   };
 
-  // Keyboard shortcut Ctrl+P / Cmd+P listener to automatically isolate certificate if unlocked
   useEffect(() => {
     const handleBeforePrint = () => {
       if (isAllChecked) {
@@ -157,230 +119,199 @@ export default function Pledge() {
   }, [isAllChecked]);
 
   return (
-    <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 space-y-10">
       
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-4 no-print">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/40 text-xs font-mono text-emerald-400">
-          <ShieldCheck className="w-3.5 h-3.5" />
-          <span>OFFICIAL CYBER SAFETY COMMITMENT</span>
-        </div>
-        <h1 className="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
-          The Cyber Safety <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-purple-400">Pledge</span>
+      <div className="space-y-2 border-b border-slate-800 pb-6 no-print">
+        <h1 className="font-display font-bold text-2xl sm:text-4xl text-white">
+          Cyber safety pledge
         </h1>
         <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-          Adopt the national student principles guided by the Ministry of Home Affairs. Read and tick each pledge item to generate your personal Certificate of Commitment.
+          The official cyber safety commitments from the Ministry of Home Affairs and Indian Cyber Crime Coordination Centre (I4C). Tick each line to generate your personal certificate.
         </p>
       </div>
 
-      {/* Progress & Quick Actions Bar */}
-      <div className="glass-panel p-4 rounded-xl border border-cyan-500/20 flex flex-wrap items-center justify-between gap-4 no-print">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center font-display font-bold text-sm text-cyan-300">
-            {checkedCount}/{totalItems}
-          </div>
-          <div>
-            <p className="text-xs font-mono uppercase tracking-wider text-slate-400">Pledge Progress</p>
-            <p className="text-xs text-white font-medium">
-              {isAllChecked ? 'All 7 commitments affirmed! Jai Hind!' : 'Review and affirm each statement below'}
-            </p>
-          </div>
+      {/* Progress Bar */}
+      <div className="panel p-4 flex flex-wrap items-center justify-between gap-4 no-print">
+        <div className="space-y-0.5">
+          <p className="text-xs text-slate-400">Pledge completion</p>
+          <p className="text-sm font-semibold text-white">
+            {checkedCount} of {totalItems} commitments ticked
+          </p>
         </div>
 
         <div className="flex items-center gap-2">
           {!isAllChecked ? (
             <button
               onClick={checkAll}
-              className="px-3.5 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-mono transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-md bg-[#111F38] hover:bg-slate-700 text-slate-200 text-xs font-medium transition-colors"
             >
-              Affirm All Items
+              Tick all commitments
             </button>
           ) : (
             <button
               onClick={resetAll}
-              className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 text-xs font-mono flex items-center gap-1.5 cursor-pointer"
+              className="px-3 py-1.5 rounded-md bg-[#111F38] hover:bg-slate-700 text-slate-300 text-xs font-medium flex items-center gap-1.5 transition-colors"
             >
-              <RotateCcw className="w-3 h-3" />
+              <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
               <span>Reset</span>
             </button>
           )}
         </div>
       </div>
 
-      {/* Interactive Pledge Checklist */}
-      <div className="space-y-3 no-print">
-        {PLEDGE_ITEMS.map((item, idx) => {
+      {/* Checklist */}
+      <div className="space-y-2.5 no-print">
+        {PLEDGE_ITEMS.map((item) => {
           const isChecked = !!checkedItems[item.id];
-          const isFinal = item.isFinal;
 
           return (
-            <motion.div
+            <label
               key={item.id}
               onClick={() => toggleCheck(item.id)}
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.99 }}
-              className={`p-4 sm:p-5 rounded-2xl border transition-all cursor-pointer select-none flex items-start gap-4 ${
+              className={`p-4 rounded-lg border transition-colors cursor-pointer select-none flex items-start gap-3 ${
                 isChecked
-                  ? isFinal
-                    ? 'bg-gradient-to-r from-emerald-950/40 via-cyan-950/40 to-purple-950/40 border-emerald-400 shadow-glow-green'
-                    : 'bg-[#0B1528] border-cyan-400/60 shadow-glow-cyan'
-                  : 'glass-panel border-slate-800/80 hover:border-slate-700'
+                  ? 'bg-[#0B1528] border-cyber-cyan/60 text-white'
+                  : 'panel hover:border-slate-700 text-slate-300'
               }`}
             >
-              {/* Custom Checkbox */}
-              <div className={`mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center shrink-0 transition-colors border ${
+              <div className={`mt-0.5 w-5 h-5 rounded flex items-center justify-center shrink-0 border ${
                 isChecked
-                  ? 'bg-cyan-400 border-cyan-300 text-slate-950'
-                  : 'bg-slate-900 border-slate-700 text-transparent'
+                  ? 'bg-cyber-cyan border-cyber-cyan text-[#050B14]'
+                  : 'bg-[#050B14] border-slate-700'
               }`}>
-                <Check className="w-4 h-4 stroke-[3]" />
+                {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
               </div>
 
-              {/* Text */}
               <div className="space-y-1">
-                <p className={`font-display text-sm sm:text-base leading-snug ${
-                  isChecked ? 'text-white font-semibold' : 'text-slate-300'
-                } ${isFinal ? 'text-base sm:text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-white to-emerald-400' : ''}`}>
+                <p className="text-sm sm:text-base font-medium leading-snug">
                   {item.text}
                 </p>
-                <p className="text-xs text-slate-400 font-mono">
+                <p className="text-xs text-slate-400">
                   {item.explanation}
                 </p>
               </div>
-            </motion.div>
+            </label>
           );
         })}
       </div>
 
-      {/* Name Input & Certificate Generation Card */}
-      <div className="pt-6 border-t border-slate-800 space-y-6">
+      {/* Name Input & Certificate */}
+      <div className="pt-4 border-t border-slate-800 space-y-6">
         
-        {/* Input Name field */}
-        <div className="glass-panel p-5 rounded-2xl border border-cyan-500/20 max-w-xl mx-auto space-y-2 no-print">
-          <label htmlFor="student-name" className="block text-xs font-mono uppercase tracking-wider text-cyan-300">
-            Enter Your Full Name to Personalize Certificate:
+        <div className="panel p-5 max-w-xl mx-auto space-y-2 no-print">
+          <label htmlFor="student-name" className="block text-xs font-semibold text-slate-200">
+            Enter your name to personalize the certificate:
           </label>
-          <div className="flex gap-2">
-            <input
-              id="student-name"
-              type="text"
-              value={studentName}
-              onChange={(e) => setStudentName(e.target.value)}
-              placeholder="e.g. Aryan Khan / Zoya Fatima"
-              className="w-full bg-[#050B14] border border-slate-700 focus:border-cyan-400 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400"
-              maxLength={40}
-            />
-          </div>
-          <p className="text-[11px] text-slate-400 font-mono">
-            * 100% Client-side. No name or personal data is collected or stored.
+          <input
+            id="student-name"
+            type="text"
+            value={studentName}
+            onChange={(e) => setStudentName(e.target.value)}
+            placeholder="Student full name"
+            className="w-full bg-[#050B14] border border-slate-700 focus:border-cyber-cyan rounded-md px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none"
+            maxLength={40}
+          />
+          <p className="text-xs text-slate-500">
+            This certificate is generated locally in your browser. No data is collected or stored.
           </p>
         </div>
 
-        {/* Certificate Display Card */}
-        <AnimatePresence>
-          {isAllChecked && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="space-y-4"
+        {isAllChecked && (
+          <div className="space-y-4">
+            {/* Certificate Frame */}
+            <div 
+              id="pledge-certificate"
+              className="panel border-2 border-cyber-cyan p-8 sm:p-10 text-center space-y-5"
             >
-              {/* Printable Certificate Frame */}
-              <div 
-                id="pledge-certificate"
-                className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-[#0B1528] via-[#070E1A] to-[#0B1528] border-2 border-cyan-400 p-8 sm:p-12 shadow-[0_0_50px_rgba(0,229,255,0.25)] text-center space-y-6"
+              {/* Indian Tri-Color Bar */}
+              <div className="h-1.5 w-full flex rounded-full overflow-hidden">
+                <div className="w-1/3 bg-[#FF9933]" />
+                <div className="w-1/3 bg-white" />
+                <div className="w-1/3 bg-[#138808]" />
+              </div>
+
+              {/* Certificate Header */}
+              <div className="space-y-1.5 pt-2">
+                <ShieldLogo className="w-12 h-12 mx-auto" />
+                <p className="text-xs font-medium text-cyber-cyan uppercase">
+                  Hamdard Public School, Cyber Shield Club
+                </p>
+                <h2 className="font-display font-bold text-xl sm:text-3xl text-white">
+                  Certificate of Cyber Safety Commitment
+                </h2>
+                <p className="text-xs text-slate-400">
+                  Verification ID: HPS-CS-PLEDGE-{new Date().getFullYear()}
+                </p>
+              </div>
+
+              {/* Recipient Statement */}
+              <div className="space-y-2 py-3 border-y border-slate-800 max-w-xl mx-auto">
+                <p className="text-xs text-slate-400 uppercase">
+                  This certificate is presented to
+                </p>
+                <p className="font-display font-bold text-2xl sm:text-3xl text-cyber-cyan">
+                  {studentName.trim() || 'Student Ambassador'}
+                </p>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  for affirming the national student cyber hygiene commitments, agreeing never to share OTPs or download unverified apps, and pledging:
+                </p>
+                <p className="font-display font-semibold text-base sm:text-lg text-cyber-green">
+                  "Stop. Think. Then Take Action."
+                </p>
+              </div>
+
+              {/* Details and Sign-off */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-300 pt-1">
+                <div>
+                  <span className="text-slate-400 block text-[11px]">Issued by</span>
+                  <span className="text-white font-medium">Cyber Shield HPS</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[11px]">Date</span>
+                  <span className="text-white font-medium">{todayFormatted}</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[11px]">Institution</span>
+                  <span className="text-white font-medium">Hamdard Public School</span>
+                </div>
+              </div>
+
+              <div className="pt-2 text-xs text-slate-400">
+                Pledge formulated by the Ministry of Home Affairs and Indian Cyber Crime Coordination Centre (I4C). Helpline 1930.
+              </div>
+            </div>
+
+            {/* Print Button */}
+            <div className="flex justify-center no-print">
+              <button
+                type="button"
+                onClick={handlePrintCertificate}
+                className="px-5 py-2.5 rounded-md bg-cyber-cyan hover:bg-[#39FF88] text-[#050B14] font-semibold text-sm flex items-center gap-2 transition-colors cursor-pointer"
               >
-                {/* Decorative Indian Tri-Color subtle line */}
-                <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#FF9933] via-white to-[#138808]" />
-
-                {/* Badge & School Header */}
-                <div className="flex flex-col items-center justify-center space-y-2 pt-2">
-                  <ShieldLogo className="w-16 h-16 animate-pulse" />
-                  <h3 className="font-display font-extrabold text-xs uppercase tracking-widest text-[#00E5FF]">
-                    Hamdard Public School • Cyber Shield Club
-                  </h3>
-                  <h2 className="font-display font-black text-2xl sm:text-4xl text-white tracking-tight">
-                    CERTIFICATE OF CYBER SAFETY COMMITMENT
-                  </h2>
-                  <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">
-                    Verification ID: HPS-CS-PLEDGE-{new Date().getFullYear()}-OK
-                  </span>
-                </div>
-
-                {/* Recipient Statement */}
-                <div className="space-y-2 py-4 border-y border-cyan-500/20 max-w-2xl mx-auto">
-                  <p className="text-xs sm:text-sm text-slate-400 uppercase font-mono tracking-wider">
-                    This is proudly presented to
-                  </p>
-                  <p className="font-display font-black text-2xl sm:text-4xl text-[#00E5FF] drop-shadow-[0_0_15px_rgba(0,229,255,0.5)]">
-                    {studentName.trim() || 'Valued Student Ambassador'}
-                  </p>
-                  <p className="text-xs sm:text-sm text-slate-200 leading-relaxed pt-2">
-                    for upholding the national principles of cyber hygiene, zero credential sharing, vigilant scam verification, and committing to:
-                  </p>
-                  <p className="font-display font-bold text-base sm:text-lg text-[#39FF88] tracking-wide">
-                    "Stop. Think. Then Take Action."
-                  </p>
-                </div>
-
-                {/* Footer Stamp & Date */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center pt-2 text-xs font-mono text-slate-300">
-                  <div>
-                    <span className="text-slate-400 block text-[11px]">ISSUED BY</span>
-                    <span className="text-white font-bold">Cyber Shield HPS</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[11px]">DATE OF PLEDGE</span>
-                    <span className="text-[#00E5FF] font-bold">{todayFormatted}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[11px]">COMMUNITY</span>
-                    <span className="text-white font-bold">Hamdard Public School</span>
-                  </div>
-                </div>
-
-                {/* Jai Hind Celebration Sign-off */}
-                <div className="pt-2 flex flex-col items-center justify-center gap-1.5">
-                  <span className="inline-block px-5 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/50 text-[#39FF88] font-display font-bold text-sm tracking-widest shadow-glow-green">
-                    🇮🇳 JAI HIND! 🇮🇳
-                  </span>
-                  <p className="text-[10px] font-mono text-slate-400 pt-1">
-                    Guided by the Ministry of Home Affairs / I4C • Toll-Free Emergency Helpline: 1930
-                  </p>
-                </div>
-              </div>
-
-              {/* Print Button */}
-              <div className="flex justify-center no-print">
-                <button
-                  type="button"
-                  onClick={handlePrintCertificate}
-                  className="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-display font-bold text-sm flex items-center gap-2 shadow-glow-cyan transition-all cursor-pointer"
-                >
-                  <Printer className="w-4 h-4" />
-                  <span>Print or Save Certificate</span>
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                <Printer className="w-4 h-4" aria-hidden="true" />
+                <span>Print or save certificate</span>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Official Mandatory Credit Line */}
-      <div className="p-4 rounded-xl bg-[#070E1A] border border-slate-800 text-center space-y-1 no-print">
-        <p className="text-xs text-slate-400">
+      {/* Credit Line */}
+      <div className="panel p-4 text-center space-y-1 no-print text-xs text-slate-400">
+        <p>
           Pledge text by the{' '}
           <a
             href="https://i4c.mha.gov.in"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-cyan-300 hover:underline font-medium inline-flex items-center gap-1"
+            className="text-cyber-cyan hover:underline inline-flex items-center gap-1"
           >
             <span>Ministry of Home Affairs / Indian Cyber Crime Coordination Centre (I4C)</span>
-            <ExternalLink className="w-3 h-3" />
+            <ExternalLink className="w-3 h-3" aria-hidden="true" />
           </a>
         </p>
-        <p className="text-[11px] text-slate-400 font-mono">
+        <p className="text-slate-500">
           Adapted for student awareness by Cyber Shield HPS at Hamdard Public School.
         </p>
       </div>
@@ -388,4 +319,3 @@ export default function Pledge() {
     </div>
   );
 }
-

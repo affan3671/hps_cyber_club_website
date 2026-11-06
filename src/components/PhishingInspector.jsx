@@ -1,22 +1,10 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  ShieldCheck, 
-  ShieldAlert, 
-  CheckCircle2, 
-  XCircle, 
-  RotateCcw, 
-  ArrowRight, 
-  Eye, 
-  ExternalLink,
-  HelpCircle,
-  Sparkles
-} from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 import { PHISHING_LINKS } from '../data/linksData';
 
 export default function PhishingInspector({ onScoreUpdate }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [userVerdict, setUserVerdict] = useState(null); // true = safe, false = phishing
+  const [userVerdict, setUserVerdict] = useState(null);
   const [score, setScore] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
 
@@ -56,33 +44,30 @@ export default function PhishingInspector({ onScoreUpdate }) {
     const percentage = Math.round((score / total) * 100);
 
     return (
-      <div className="glass-panel p-8 rounded-3xl border border-emerald-400 text-center space-y-6 max-w-xl mx-auto shadow-glow-green">
-        <div className="w-20 h-20 rounded-full mx-auto flex items-center justify-center bg-emerald-500/10 border-2 border-emerald-400 text-emerald-300 text-3xl font-display font-extrabold">
+      <div className="p-6 text-center space-y-4 max-w-lg mx-auto">
+        <div className="w-16 h-16 rounded-full mx-auto flex items-center justify-center bg-[#111F38] text-cyber-green text-2xl font-bold border border-slate-700">
           {percentage}%
         </div>
 
         <div className="space-y-1">
-          <h3 className="font-display font-black text-2xl text-white">
-            {percentage >= 80 ? 'URL Inspector Pro! 🔍' : 'Decent Dissection! 💡'}
+          <h3 className="font-display font-bold text-xl text-white">
+            Inspection complete
           </h3>
           <p className="text-xs sm:text-sm text-slate-300">
-            You solved <strong>{score}</strong> out of <strong>{total}</strong> complex web address puzzles.
+            You evaluated {score} out of {total} web addresses correctly.
           </p>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#050B14] border border-slate-800 text-left font-mono text-xs space-y-2">
-          <p className="text-slate-400 uppercase tracking-wider text-[11px]">Key Lesson</p>
-          <p className="text-slate-200">
-            Never trust a URL by glancing only at the beginning. Always read the base domain immediately to the left of the first single slash `/`!
-          </p>
-        </div>
+        <p className="text-xs text-slate-400 bg-[#050B14] p-3 rounded-md border border-slate-800 text-left leading-relaxed">
+          Rule: Never verify a website by looking only at the beginning of the address. Look directly before the first single forward slash to identify the real domain and extension.
+        </p>
 
         <button
           onClick={handleRestart}
-          className="px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs font-mono flex items-center gap-2 mx-auto cursor-pointer"
+          className="px-4 py-2 rounded-md bg-[#111F38] hover:bg-slate-700 text-slate-200 font-medium text-xs flex items-center gap-2 mx-auto transition-colors"
         >
-          <RotateCcw className="w-3.5 h-3.5" />
-          <span>Inspect Again</span>
+          <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
+          <span>Inspect again</span>
         </button>
       </div>
     );
@@ -92,57 +77,57 @@ export default function PhishingInspector({ onScoreUpdate }) {
   const isCorrect = isAnswered && userVerdict === link.isSafe;
 
   return (
-    <div className="space-y-6 max-w-2xl mx-auto">
+    <div className="space-y-4 max-w-2xl mx-auto">
       
-      {/* Header bar */}
-      <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-3">
-        <span>URL Challenge {currentIndex + 1} of {total}</span>
-        <span>Score: <strong className="text-emerald-400">{score}</strong></span>
+      {/* Tracker */}
+      <div className="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2.5">
+        <span>Address {currentIndex + 1} of {total}</span>
+        <span>Score: <strong className="text-white">{score}</strong></span>
       </div>
 
-      {/* Target URL Display */}
-      <div className="glass-panel p-6 rounded-2xl border border-cyan-500/30 space-y-5">
+      {/* Target Link Display */}
+      <div className="panel p-5 space-y-4">
         
-        <div>
-          <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-400 block mb-1.5">
-            Dissect This Address:
+        <div className="space-y-1.5">
+          <span className="text-xs text-slate-400 block font-medium">
+            Analyze this web address:
           </span>
-          <div className="p-3.5 rounded-xl bg-[#050B14] border border-slate-700 text-center font-mono text-xs sm:text-sm text-white select-all break-all shadow-inner">
+          <div className="p-3 rounded-md bg-[#050B14] border border-slate-700 font-mono text-xs sm:text-sm text-white select-all break-all">
             {link.displayUrl}
           </div>
         </div>
 
         {/* Anatomical Breakdown */}
         <div className="space-y-2">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
-            Domain Anatomy Analyzer:
+          <span className="text-xs text-slate-400 block font-medium">
+            Address breakdown:
           </span>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
             
-            <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
-              <span className="text-[10px] text-slate-500 block">PROTOCOL</span>
-              <span className={link.breakdown.protocol.includes('https') ? 'text-emerald-400' : 'text-red-400 font-bold'}>
+            <div className="p-2.5 rounded-md bg-[#050B14] border border-slate-800">
+              <span className="text-[11px] text-slate-500 block">Protocol</span>
+              <span className={`font-mono ${link.breakdown.protocol.includes('https') ? 'text-cyber-green' : 'text-red-400 font-medium'}`}>
                 {link.breakdown.protocol}
               </span>
             </div>
 
-            <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
-              <span className="text-[10px] text-slate-500 block">SUBDOMAIN</span>
-              <span className="text-purple-300 truncate block">
+            <div className="p-2.5 rounded-md bg-[#050B14] border border-slate-800">
+              <span className="text-[11px] text-slate-500 block">Subdomain</span>
+              <span className="font-mono text-slate-200 truncate block">
                 {link.breakdown.subdomain}
               </span>
             </div>
 
-            <div className="p-2.5 rounded-lg bg-slate-900 border border-cyan-500/40">
-              <span className="text-[10px] text-cyan-400 block">REAL DOMAIN</span>
-              <span className="text-white font-bold truncate block">
+            <div className="p-2.5 rounded-md bg-[#050B14] border border-cyber-cyan/40">
+              <span className="text-[11px] text-cyber-cyan block">Primary domain</span>
+              <span className="font-mono text-white font-medium truncate block">
                 {link.breakdown.actualDomain}
               </span>
             </div>
 
-            <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
-              <span className="text-[10px] text-slate-500 block">TLD EXTENSION</span>
-              <span className="text-amber-400 truncate block">
+            <div className="p-2.5 rounded-md bg-[#050B14] border border-slate-800">
+              <span className="text-[11px] text-slate-500 block">Extension</span>
+              <span className="font-mono text-slate-200 truncate block">
                 {link.breakdown.tld}
               </span>
             </div>
@@ -150,52 +135,42 @@ export default function PhishingInspector({ onScoreUpdate }) {
           </div>
         </div>
 
-        {/* User Choice Buttons */}
+        {/* Choice Buttons */}
         {!isAnswered ? (
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-800">
-            <span className="text-xs font-mono text-slate-300">
-              What is your verdict on this URL?
+            <span className="text-xs text-slate-300">
+              Is this destination authentic or phishing?
             </span>
 
-            <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="flex items-center gap-2.5 w-full sm:w-auto">
               <button
+                type="button"
                 onClick={() => handleDecision(true)}
-                className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-emerald-950 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-300 font-bold text-xs font-mono flex items-center justify-center gap-1.5 cursor-pointer transition-all"
+                className="flex-1 sm:flex-initial px-4 py-2 rounded-md bg-[#070E1A] hover:bg-[#111F38] border border-slate-700 text-slate-200 text-xs font-medium transition-colors"
               >
-                <ShieldCheck className="w-4 h-4" />
-                <span>Legitimate & Safe</span>
+                Legitimate address
               </button>
 
               <button
+                type="button"
                 onClick={() => handleDecision(false)}
-                className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-red-950 hover:bg-red-900 border border-red-500/50 text-red-300 font-bold text-xs font-mono flex items-center justify-center gap-1.5 cursor-pointer transition-all"
+                className="flex-1 sm:flex-initial px-4 py-2 rounded-md bg-[#160B0E] hover:bg-[#2A0F14] border border-red-800/80 text-red-300 text-xs font-medium transition-colors"
               >
-                <ShieldAlert className="w-4 h-4" />
-                <span>Phishing Trap</span>
+                Phishing spoof
               </button>
             </div>
           </div>
         ) : (
           /* Post-Answer Feedback */
-          <div className={`p-5 rounded-xl border space-y-3 ${
-            isCorrect ? 'bg-emerald-950/30 border-emerald-500/50' : 'bg-red-950/30 border-red-500/50'
+          <div className={`p-4 rounded-md border space-y-2.5 text-xs sm:text-sm ${
+            isCorrect ? 'bg-[#091712] border-emerald-800/60' : 'bg-[#160B0E] border-red-800/60'
           }`}>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                {isCorrect ? (
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                ) : (
-                  <XCircle className="w-5 h-5 text-red-400" />
-                )}
-                <h4 className="font-display font-bold text-sm text-white">
-                  {isCorrect ? 'Accurate Call! 🔍' : 'Watch Out! ⚠️'}
-                </h4>
-              </div>
-
-              <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase ${
-                link.isSafe ? 'bg-emerald-900/60 text-emerald-300' : 'bg-red-900/60 text-red-300'
-              }`}>
-                {link.isSafe ? 'AUTHENTIC SITE' : 'PHISHING SPOOF'}
+              <span className={`font-semibold ${isCorrect ? 'text-emerald-400' : 'text-red-400'}`}>
+                {isCorrect ? 'Correct call' : 'Incorrect call'}
+              </span>
+              <span className="text-xs text-slate-300">
+                {link.isSafe ? 'Authentic address' : 'Phishing spoof'}
               </span>
             </div>
 
@@ -203,17 +178,16 @@ export default function PhishingInspector({ onScoreUpdate }) {
               {link.explanation}
             </p>
 
-            <div className="p-3 bg-[#050B14]/80 rounded-lg border border-slate-800 text-[11px] font-mono text-cyan-300">
-              💡 <strong>Pro Inspection Rule:</strong> {link.analysisTip}
+            <div className="p-2.5 bg-[#050B14] rounded-md border border-slate-800 text-xs text-slate-300">
+              <strong className="text-white">Analysis tip: </strong> {link.analysisTip}
             </div>
 
-            <div className="flex justify-end pt-2">
+            <div className="flex justify-end pt-1">
               <button
                 onClick={handleNext}
-                className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-display font-bold text-xs flex items-center gap-2 cursor-pointer shadow-glow-green"
+                className="px-4 py-1.5 rounded-md bg-cyber-green text-[#050B14] font-medium text-xs hover:bg-cyber-cyan transition-colors"
               >
-                <span>{currentIndex < total - 1 ? 'Next URL Challenge' : 'Complete Inspection'}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                {currentIndex < total - 1 ? 'Next address' : 'Complete inspection'}
               </button>
             </div>
           </div>
@@ -224,4 +198,3 @@ export default function PhishingInspector({ onScoreUpdate }) {
     </div>
   );
 }
-

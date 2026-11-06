@@ -1,23 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Gamepad2, 
-  MessageSquareWarning, 
-  Link2, 
-  Award, 
-  Share2, 
-  Check, 
-  Copy, 
-  ShieldCheck,
-  Sparkles,
-  Printer
-} from 'lucide-react';
+import { MessageSquareWarning, Link2, Check, Copy, Printer } from 'lucide-react';
 import ScamQuiz from '../components/ScamQuiz';
 import PhishingInspector from '../components/PhishingInspector';
 import ShieldLogo from '../components/ShieldLogo';
 
 export default function PracticeZone() {
-  const [activeMode, setActiveMode] = useState('quiz'); // 'quiz' or 'inspector'
+  const [activeMode, setActiveMode] = useState('quiz');
   const [quizStats, setQuizStats] = useState({ score: 0, total: 6 });
   const [inspectorStats, setInspectorStats] = useState({ score: 0, total: 5 });
   const [playerName, setPlayerName] = useState('');
@@ -32,10 +20,10 @@ export default function PracticeZone() {
   }).format(new Date());
 
   const handleCopyShare = () => {
-    const text = `🛡️ I scored ${currentTotal}/${totalPossible} (${overallPercentage}%) on the Cyber Shield HPS Scam Simulator at Hamdard Public School! Can you beat my scam detection score?`;
+    const text = `I scored ${currentTotal}/${totalPossible} (${overallPercentage}%) on the Cyber Shield HPS scam detection exercises at Hamdard Public School.`;
     navigator.clipboard.writeText(text);
     setCopiedBadge(true);
-    setTimeout(() => setCopiedBadge(false), 2500);
+    setTimeout(() => setCopiedBadge(false), 2000);
   };
 
   const handlePrintResultCard = () => {
@@ -107,51 +95,45 @@ export default function PracticeZone() {
   }, []);
 
   return (
-    <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 space-y-10">
       
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-4 no-print">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/40 text-xs font-mono text-emerald-400">
-          <Gamepad2 className="w-3.5 h-3.5" />
-          <span>PHASE 2 INTERACTIVE DEFENSE LAB</span>
-        </div>
-        <h1 className="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
-          Cyber Shield <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400">Practice Zone</span>
+      <div className="space-y-2 border-b border-slate-800 pb-6 no-print">
+        <h1 className="font-display font-bold text-2xl sm:text-4xl text-white">
+          Practice zone: spot the scam
         </h1>
         <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-          Test your scam-spotting reflexes against simulated fake SMS messages, deceptive WhatsApp emergencies, spoofed calls, and fraudulent web addresses.
+          Test your ability to spot deceptive messages and suspicious web links. No personal data is collected or saved.
         </p>
       </div>
 
       {/* Mode Selector Tabs */}
-      <div className="flex items-center justify-center gap-3 no-print">
+      <div className="flex items-center gap-2 border-b border-slate-800 pb-3 no-print">
         <button
           onClick={() => setActiveMode('quiz')}
-          className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs sm:text-sm font-display font-bold transition-all cursor-pointer ${
+          className={`px-3.5 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors cursor-pointer ${
             activeMode === 'quiz'
-              ? 'bg-cyan-500 text-slate-950 shadow-glow-cyan'
-              : 'bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-slate-700'
+              ? 'bg-cyber-cyan text-[#050B14] font-semibold'
+              : 'bg-[#0B1528] text-slate-300 hover:text-white hover:bg-[#111F38] border border-slate-800'
           }`}
         >
-          <MessageSquareWarning className="w-4 h-4" />
-          <span>Spot The Scam (Quiz)</span>
+          Spot the scam (Quiz)
         </button>
 
         <button
           onClick={() => setActiveMode('inspector')}
-          className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs sm:text-sm font-display font-bold transition-all cursor-pointer ${
+          className={`px-3.5 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors cursor-pointer ${
             activeMode === 'inspector'
-              ? 'bg-emerald-400 text-slate-950 shadow-glow-green'
-              : 'bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-slate-700'
+              ? 'bg-cyber-cyan text-[#050B14] font-semibold'
+              : 'bg-[#0B1528] text-slate-300 hover:text-white hover:bg-[#111F38] border border-slate-800'
           }`}
         >
-          <Link2 className="w-4 h-4" />
-          <span>Phishing Link Inspector</span>
+          Phishing link inspector
         </button>
       </div>
 
       {/* Active Game Component Container */}
-      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-cyan-500/30 no-print">
+      <div className="panel p-5 sm:p-6 no-print">
         {activeMode === 'quiz' ? (
           <ScamQuiz
             onScoreUpdate={(score, total) => setQuizStats({ score, total })}
@@ -163,99 +145,96 @@ export default function PracticeZone() {
         )}
       </div>
 
-      {/* Shareable Defender Result Card */}
-      <div className="pt-6 border-t border-slate-800 space-y-6">
-        <div className="text-center space-y-2 no-print">
-          <h2 className="font-display font-bold text-2xl text-white">
-            Your Cyber Defender Status Card
+      {/* Result Card */}
+      <div className="pt-4 border-t border-slate-800 space-y-5">
+        <div className="space-y-1 no-print">
+          <h2 className="font-display font-bold text-xl text-white">
+            Performance summary
           </h2>
-          <p className="text-xs text-slate-400 font-mono">
-            Client-side calculated score badge for Hamdard Public School students
+          <p className="text-xs text-slate-400">
+            Calculated locally on your device for Hamdard Public School students
           </p>
         </div>
 
         <div 
           id="defender-result-card"
-          className="glass-panel p-6 sm:p-8 rounded-3xl border border-cyan-500/40 max-w-xl mx-auto space-y-6 bg-gradient-to-br from-[#0B1528] to-[#070E1A] shadow-glow-cyan"
+          className="panel p-6 max-w-lg mx-auto space-y-5"
         >
-          
-          <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-            <div className="flex items-center gap-3">
-              <ShieldLogo className="w-10 h-10" />
+          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div className="flex items-center gap-2.5">
+              <ShieldLogo className="w-8 h-8" />
               <div>
-                <h3 className="font-display font-bold text-sm text-white">CYBER DEFENDER RANK</h3>
-                <p className="text-[11px] font-mono text-[#00E5FF]">Hamdard Public School</p>
+                <h3 className="font-display font-bold text-sm text-white">Cyber defense summary</h3>
+                <p className="text-xs text-slate-400">Hamdard Public School</p>
               </div>
             </div>
 
-            <span className="px-3 py-1 rounded-full bg-cyan-950 border border-cyan-400/40 text-[#00E5FF] font-mono text-xs font-bold">
-              {overallPercentage}% Mastery
+            <span className="px-2.5 py-1 rounded-md bg-[#111F38] text-cyber-cyan text-xs font-semibold">
+              {overallPercentage}% correct
             </span>
           </div>
 
           <div className="space-y-3">
             <div className="no-print">
-              <label htmlFor="badge-nickname" className="text-[11px] font-mono text-slate-400 block mb-1">
-                Cadet Handle / Name:
+              <label htmlFor="badge-nickname" className="text-xs text-slate-400 block mb-1">
+                Student identifier or initials:
               </label>
               <input
                 id="badge-nickname"
                 type="text"
                 value={playerName}
                 onChange={(e) => setPlayerName(e.target.value)}
-                placeholder="Enter nickname or initials"
-                className="w-full bg-[#050B14] border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-400 font-mono"
+                placeholder="Type your name or initials"
+                className="w-full bg-[#050B14] border border-slate-700 rounded-md px-3 py-1.5 text-xs text-white focus:outline-none focus:border-cyber-cyan"
                 maxLength={30}
               />
             </div>
 
-            {/* Print-only cadet name display */}
             <div className="hidden print:block py-1 border-b border-slate-800">
-              <span className="text-[10px] font-mono text-slate-400 block uppercase">CADET NAME / IDENTIFIER:</span>
-              <span className="font-display font-bold text-lg text-white">
-                {playerName.trim() || 'Student Sentinel'}
+              <span className="text-xs text-slate-400 block">Student identifier:</span>
+              <span className="font-semibold text-sm text-white">
+                {playerName.trim() || 'Student'}
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 font-mono text-xs pt-1">
-              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">SCAM SPOTTER</span>
-                <span className="text-[#00E5FF] font-bold text-sm">
-                  {quizStats.score} / {quizStats.total} Correct
+            <div className="grid grid-cols-2 gap-3 text-xs pt-1">
+              <div className="p-3 rounded-md bg-[#050B14] border border-slate-800">
+                <span className="text-[11px] text-slate-400 block">Scam messages</span>
+                <span className="text-white font-semibold text-sm">
+                  {quizStats.score} of {quizStats.total} correct
                 </span>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
-                <span className="text-[10px] text-slate-400 block">LINK INSPECTOR</span>
-                <span className="text-[#39FF88] font-bold text-sm">
-                  {inspectorStats.score} / {inspectorStats.total} Solved
+              <div className="p-3 rounded-md bg-[#050B14] border border-slate-800">
+                <span className="text-[11px] text-slate-400 block">Web links</span>
+                <span className="text-white font-semibold text-sm">
+                  {inspectorStats.score} of {inspectorStats.total} correct
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Footer details inside card */}
-          <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-400">
-            <span>Verified: {todayFormatted}</span>
-            <span className="text-[#00E5FF]">Helpline 1930</span>
+          <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+            <span>Date: {todayFormatted}</span>
+            <span>Helpline: 1930</span>
           </div>
 
-          <div className="pt-1 flex items-center justify-between gap-3 no-print">
+          <div className="pt-1 flex items-center justify-between gap-2.5 no-print">
             <button
               onClick={handleCopyShare}
-              className="flex-1 py-2.5 px-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-mono text-xs font-bold flex items-center justify-center gap-2 cursor-pointer shadow-glow-cyan"
+              className="flex-1 py-2 px-3 rounded-md bg-cyber-cyan hover:bg-[#39FF88] text-[#050B14] text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
             >
-              {copiedBadge ? <Check className="w-4 h-4 text-slate-950" /> : <Copy className="w-4 h-4" />}
-              <span>{copiedBadge ? 'Copied Share Text!' : 'Copy Result Badge'}</span>
+              {copiedBadge ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              <span>{copiedBadge ? 'Copied to clipboard' : 'Copy score summary'}</span>
             </button>
 
             <button
               type="button"
               onClick={handlePrintResultCard}
-              className="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono flex items-center gap-1.5 cursor-pointer border border-slate-700"
+              className="py-2 px-3 rounded-md bg-[#111F38] hover:bg-slate-700 text-slate-200 text-xs font-medium flex items-center gap-1.5 border border-slate-700 transition-colors cursor-pointer"
             >
               <Printer className="w-4 h-4 text-slate-400" />
-              <span>Print</span>
+              <span>Print card</span>
             </button>
           </div>
 
@@ -265,4 +244,3 @@ export default function PracticeZone() {
     </div>
   );
 }
-

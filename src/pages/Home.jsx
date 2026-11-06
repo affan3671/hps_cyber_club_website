@@ -1,287 +1,142 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { 
-  ShieldCheck, 
-  AlertTriangle, 
-  ArrowRight, 
-  PhoneCall, 
-  CheckCircle2, 
-  Gamepad2, 
-  Smartphone, 
-  Fish, 
-  Key, 
-  ExternalLink,
-  Lock,
-  Zap,
-  Users
-} from 'lucide-react';
+import { PhoneCall } from 'lucide-react';
 import ShieldLogo from '../components/ShieldLogo';
-import GlitchText from '../components/GlitchText';
-import Counter from '../components/Counter';
 import { THREATS } from '../data/threatsData';
 
 export default function Home() {
   const featuredThreats = THREATS.slice(0, 4);
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-16">
       
       {/* Hero Section */}
-      <section className="relative pt-12 pb-20 md:pt-20 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section className="py-6 sm:py-10 border-b border-slate-800">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          {/* Hero Left Content */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-7 space-y-6 text-center lg:text-left"
-          >
-            {/* School & Club Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0B1528] border border-cyan-500/30 text-xs sm:text-sm text-cyan-300 font-mono shadow-glow-cyan">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-              <span>Official Cybersecurity Awareness Club</span>
-              <span className="text-slate-500">•</span>
-              <span className="text-white font-semibold">Hamdard Public School</span>
+          <div className="lg:col-span-8 space-y-5">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-[#0B1528] border border-slate-800 text-xs text-slate-300">
+              <span>Hamdard Public School</span>
+              <span className="text-slate-600">/</span>
+              <span className="text-cyber-cyan font-medium">Cyber Shield Club</span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="font-display font-extrabold text-4xl sm:text-6xl xl:text-7xl tracking-tight text-white leading-[1.1]">
-              CYBER SHIELD <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] via-[#39FF88] to-[#8B5CF6]">
-                <GlitchText text="HPS CYBER DEFENSE" />
-              </span>
+            <h1 className="font-display font-bold text-3xl sm:text-5xl text-white tracking-tight leading-tight">
+              Cyber Shield HPS
             </h1>
 
-            {/* Tagline */}
-            <div className="p-3 sm:p-4 rounded-xl bg-cyan-950/20 border-l-4 border-[#00E5FF] max-w-xl mx-auto lg:mx-0">
-              <p className="font-display font-bold text-lg sm:text-2xl text-cyan-200 tracking-wide">
-                "Stop. Think. Then Take Action."
-              </p>
-              <p className="text-xs sm:text-sm text-slate-300 mt-1">
-                Equipping young minds to identify scams, outsmart phishers, and build unbreakable digital defenses.
-              </p>
-            </div>
-
-            {/* Subtitle / Intro */}
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              Welcome to <span className="text-white font-semibold">Cyber Shield HPS</span> at <strong className="text-cyan-300">Hamdard Public School</strong>. The internet isn't something to fear — it's something to master. We teach students, teachers, and parents how to outwit cybercriminals with confidence, calm minds, and proactive habits.
+            <p className="text-lg sm:text-xl text-cyber-cyan font-medium">
+              Stop. Think. Then Take Action.
             </p>
 
-            {/* Hero CTA Buttons */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl">
+              Hamdard Public School's student-led cybersecurity awareness club. We teach school students how to recognize online scams, protect their social and payment accounts, and respond quickly if something goes wrong.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3 pt-1">
               <Link
                 to="/threats"
-                className="btn-cyber-primary text-white font-bold px-6 py-3.5 rounded-xl flex items-center gap-2 group text-sm sm:text-base cursor-pointer"
+                className="bg-cyber-cyan hover:bg-[#39FF88] text-[#050B14] font-semibold px-4 py-2.5 rounded-md text-sm transition-colors"
               >
-                <span>Learn the Threats</span>
-                <ArrowRight className="w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform" />
+                Learn the threats
               </Link>
 
               <Link
                 to="/pledge"
-                className="px-6 py-3.5 rounded-xl border border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-slate-200 hover:text-white font-medium flex items-center gap-2 transition-all text-sm sm:text-base hover:border-cyan-500/50"
+                className="bg-[#0B1528] hover:bg-[#111F38] text-slate-200 hover:text-white border border-slate-700 px-4 py-2.5 rounded-md text-sm transition-colors"
               >
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Take the Pledge</span>
+                Take the pledge
               </Link>
 
               <Link
                 to="/practice-zone"
-                className="px-5 py-3.5 rounded-xl border border-emerald-500/40 bg-emerald-950/20 hover:bg-emerald-900/30 text-emerald-300 font-semibold flex items-center gap-2 transition-all text-sm sm:text-base shadow-glow-green"
+                className="bg-[#0B1528] hover:bg-[#111F38] text-cyber-green hover:text-white border border-slate-700 px-4 py-2.5 rounded-md text-sm transition-colors"
               >
-                <Gamepad2 className="w-4 h-4 text-emerald-400" />
-                <span>Practice Zone (Quiz)</span>
+                Practice spotting scams
               </Link>
             </div>
-
-            {/* Quick Helpline Pill */}
-            <div className="pt-2 flex items-center justify-center lg:justify-start gap-3 text-xs text-slate-400 font-mono">
-              <span className="flex items-center gap-1.5 text-red-400">
-                <PhoneCall className="w-3.5 h-3.5 animate-pulse" />
-                <span>Dial 1930</span>
-              </span>
-              <span>•</span>
-              <span>National Cybercrime Helpline (24x7)</span>
-            </div>
-          </motion.div>
-
-          {/* Hero Right Visual: Cyber Shield Interactive Hologram */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-5 flex justify-center"
-          >
-            <div className="relative w-full max-w-md">
-              {/* Glowing Aura */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 via-purple-500/20 to-emerald-500/20 rounded-3xl blur-2xl transform -rotate-3" />
-              
-              {/* Card Container */}
-              <div className="relative glass-panel rounded-2xl p-6 sm:p-8 border border-cyan-500/30 shadow-2xl">
-                
-                {/* Header of Shield Card */}
-                <div className="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
-                  <div className="flex items-center gap-3">
-                    <ShieldLogo className="w-12 h-12" />
-                    <div>
-                      <h3 className="font-display font-bold text-white text-base">HPS Cyber Shield</h3>
-                      <p className="text-[11px] font-mono text-cyan-400">STATUS: DEFENSE ACTIVE</p>
-                    </div>
-                  </div>
-                  <span className="px-2.5 py-1 rounded bg-emerald-950/80 border border-emerald-500/40 text-[10px] font-mono text-emerald-300 uppercase">
-                    Zero Panic
-                  </span>
-                </div>
-
-                {/* Cyber Matrix stats */}
-                <div className="space-y-3.5 font-mono text-xs">
-                  <div className="p-3 rounded-lg bg-[#070E1A]/80 border border-slate-800 flex items-center justify-between">
-                    <span className="text-slate-400">Target Audience</span>
-                    <span className="text-white font-bold">Students & Youth (Teens)</span>
-                  </div>
-
-                  <div className="p-3 rounded-lg bg-[#070E1A]/80 border border-slate-800 flex items-center justify-between">
-                    <span className="text-slate-400">Golden Response Window</span>
-                    <span className="text-emerald-400 font-bold">&lt; 2 Hours (Dial 1930)</span>
-                  </div>
-
-                  <div className="p-3 rounded-lg bg-[#070E1A]/80 border border-slate-800 flex items-center justify-between">
-                    <span className="text-slate-400">Monthly Event</span>
-                    <span className="text-cyan-300 font-bold">Cyber Jagrookta Diwas</span>
-                  </div>
-
-                  <div className="p-3 rounded-lg bg-[#070E1A]/80 border border-slate-800 flex items-center justify-between">
-                    <span className="text-slate-400">National Partner Link</span>
-                    <span className="text-purple-300 font-bold">MHA / I4C Alignment</span>
-                  </div>
-                </div>
-
-                {/* Emergency direct card alert */}
-                <div className="mt-6 p-3.5 rounded-xl bg-red-950/30 border border-red-500/30 flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-red-500/20 text-red-400 shrink-0">
-                    <PhoneCall className="w-5 h-5 animate-pulse" />
-                  </div>
-                  <div className="text-xs">
-                    <p className="text-white font-semibold">Toll-Free Emergency: 1930</p>
-                    <p className="text-red-300 text-[11px]">Direct financial cyber fraud freezing</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Quick Statistics Bar */}
-      <section className="border-y border-cyan-500/15 bg-[#0B1528]/50 backdrop-blur-md py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            
-            <div className="space-y-1">
-              <div className="text-3xl sm:text-4xl font-extrabold text-[#00E5FF] font-display">
-                <Counter end={1930} />
-              </div>
-              <p className="text-xs text-slate-400 font-mono uppercase tracking-wider">
-                National Helpline Dial
-              </p>
-            </div>
-
-            <div className="space-y-1">
-              <div className="text-3xl sm:text-4xl font-extrabold text-[#39FF88] font-display">
-                <Counter end={100} suffix="%" />
-              </div>
-              <p className="text-xs text-slate-400 font-mono uppercase tracking-wider">
-                Free & Student-Centered
-              </p>
-            </div>
-
-            <div className="space-y-1">
-              <div className="text-3xl sm:text-4xl font-extrabold text-[#8B5CF6] font-display">
-                <Counter end={7} suffix="+" />
-              </div>
-              <p className="text-xs text-slate-400 font-mono uppercase tracking-wider">
-                Core Threats Deconstructed
-              </p>
-            </div>
-
-            <div className="space-y-1">
-              <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-display">
-                <Counter end={0} suffix=" Stored" />
-              </div>
-              <p className="text-xs text-slate-400 font-mono uppercase tracking-wider">
-                Personal Data Collected
-              </p>
-            </div>
-
           </div>
+
+          <div className="lg:col-span-4">
+            <div className="panel p-6 space-y-4">
+              <div className="flex items-center gap-3 border-b border-slate-800 pb-3">
+                <ShieldLogo className="w-10 h-10" />
+                <div>
+                  <h2 className="font-display font-bold text-white text-base">Club overview</h2>
+                  <p className="text-xs text-slate-400">Hamdard Public School</p>
+                </div>
+              </div>
+
+              <dl className="space-y-3 text-xs">
+                <div>
+                  <dt className="text-slate-400">Audience</dt>
+                  <dd className="text-white font-medium">School students (Grades 6 to 12)</dd>
+                </div>
+                <div>
+                  <dt className="text-slate-400">Monthly program</dt>
+                  <dd className="text-white font-medium">Cyber Jagrookta Diwas (first Wednesday)</dd>
+                </div>
+                <div>
+                  <dt className="text-slate-400">National helpline</dt>
+                  <dd className="text-white font-medium">1930 (Toll-free, 24/7)</dd>
+                </div>
+                <div>
+                  <dt className="text-slate-400">Official reporting</dt>
+                  <dd className="text-white font-medium">cybercrime.gov.in</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* Featured Threat Intelligence Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+      {/* Main Threats Section (Varied Row Layout) */}
+      <section className="space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-slate-800 pb-3">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-cyan-950/50 border border-cyan-500/30 text-xs font-mono text-cyan-400 mb-3">
-              <AlertTriangle className="w-3.5 h-3.5" />
-              <span>PRIMARY VECTORS</span>
-            </div>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white">
-              Main Threats Targeting Students
+            <h2 className="font-display font-bold text-2xl text-white">
+              Common cyber threats targeting students
             </h2>
-            <p className="text-slate-400 text-sm mt-2 max-w-xl">
-              Cybercriminals rely on manipulation, urgent deadlines, and tempting promises. Learn the telltale signs before they strike.
+            <p className="text-xs text-slate-400 mt-1">
+              Scammers rely on artificial urgency, fear, and fake giveaways. Here is how the most common attacks work.
             </p>
           </div>
 
           <Link
             to="/threats"
-            className="inline-flex items-center gap-2 text-cyber-cyan hover:text-white font-mono text-xs uppercase tracking-wider group"
+            className="text-xs text-cyber-cyan hover:underline shrink-0"
           >
-            <span>Browse All Threat Blueprints</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            View all threats
           </Link>
         </div>
 
-        {/* Threat Highlight Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="divide-y divide-slate-800 panel overflow-hidden">
           {featuredThreats.map((threat) => (
             <div
               key={threat.id}
-              className="glass-panel glass-panel-hover rounded-xl p-5 flex flex-col justify-between group"
+              className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[#111F38]/40 transition-colors"
             >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase ${
-                    threat.severity === 'Critical' 
-                      ? 'bg-red-950 text-red-400 border border-red-500/40' 
-                      : 'bg-amber-950 text-amber-400 border border-amber-500/40'
-                  }`}>
-                    {threat.severity} Severity
+              <div className="space-y-1 md:max-w-xl">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold text-white">
+                    {threat.title}
                   </span>
-                  <span className="text-slate-400 text-xs font-mono">{threat.category}</span>
+                  <span className="text-[11px] text-slate-400 px-2 py-0.5 rounded bg-[#111F38] border border-slate-700">
+                    {threat.category}
+                  </span>
                 </div>
-
-                <h3 className="font-display font-bold text-lg text-white group-hover:text-cyber-cyan transition-colors">
-                  {threat.title}
-                </h3>
-                <p className="text-xs text-cyan-300/80 font-mono mt-0.5">
-                  {threat.subtitle}
-                </p>
-
-                <p className="text-xs text-slate-300 mt-3 leading-relaxed line-clamp-3">
+                <p className="text-xs text-slate-300 leading-relaxed">
                   {threat.summary}
                 </p>
               </div>
 
-              <div className="pt-5 mt-4 border-t border-slate-800">
+              <div className="shrink-0">
                 <Link
                   to="/threats"
-                  className="w-full inline-flex items-center justify-center gap-1.5 py-2 rounded-lg bg-slate-800/80 hover:bg-cyan-500/20 text-xs font-mono text-cyan-300 hover:text-white transition-all border border-slate-700/60 hover:border-cyan-500/50"
+                  className="inline-block text-xs text-cyber-cyan hover:text-white px-3 py-1.5 rounded-md bg-[#050B14] border border-slate-700 hover:border-cyber-cyan transition-colors"
                 >
-                  <span>Deconstruct Threat</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  Read threat details
                 </Link>
               </div>
             </div>
@@ -289,81 +144,67 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Prominent Emergency Action Strip */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-950/60 via-[#0B1528] to-red-950/60 border border-red-500/40 p-6 sm:p-10 shadow-glow-danger">
-          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6">
-            <div className="space-y-2 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-red-500/20 text-red-300 text-xs font-mono font-bold">
-                <AlertTriangle className="w-4 h-4 text-red-400 animate-bounce" />
-                <span>CRITICAL SCAM PROTOCOL</span>
-              </div>
-              <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-white">
-                Been Scammed? Act Immediately.
-              </h3>
-              <p className="text-slate-300 text-sm max-w-xl">
-                Call <strong className="text-white text-base">1930</strong> right away to initiate golden-hour fund freezing, and log the incident at <strong className="text-cyan-300">cybercrime.gov.in</strong>. Do not stay silent.
-              </p>
-            </div>
+      {/* Emergency Action Strip */}
+      <section className="panel p-6 border-red-900/60 bg-[#160B0E]">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="space-y-1.5">
+            <h3 className="font-display font-bold text-xl text-white">
+              Been scammed or noticed an unauthorized transaction?
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
+              Call the national cybercrime helpline 1930 immediately. Reporting within the first two hours gives banks the best chance to freeze money before a scammer can withdraw it.
+            </p>
+          </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <a
-                href="tel:1930"
-                className="bg-red-600 hover:bg-red-700 text-white font-display font-bold text-base px-6 py-3.5 rounded-xl shadow-glow-danger flex items-center gap-2 transition-transform hover:scale-105"
-              >
-                <PhoneCall className="w-5 h-5 animate-bounce" />
-                <span>Dial 1930 Toll-Free</span>
-              </a>
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <a
+              href="tel:1930"
+              className="bg-red-600 hover:bg-red-500 text-white font-medium text-sm px-4 py-2.5 rounded-md flex items-center gap-2 transition-colors"
+            >
+              <PhoneCall className="w-4 h-4" aria-hidden="true" />
+              <span>Call Helpline 1930</span>
+            </a>
 
-              <Link
-                to="/what-to-do"
-                className="bg-slate-900/80 hover:bg-slate-800 border border-slate-700 hover:border-cyan-400 text-cyan-300 hover:text-white font-mono text-sm px-5 py-3.5 rounded-xl transition-all"
-              >
-                View 5-Step Timeline →
-              </Link>
-            </div>
+            <Link
+              to="/what-to-do"
+              className="bg-[#0B1528] hover:bg-[#111F38] text-slate-200 border border-slate-700 px-4 py-2.5 rounded-md text-sm transition-colors"
+            >
+              Read the 5-step response guide
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* School Community & Mission Section */}
-      <section className="py-16 bg-[#070E1A]/60 border-t border-slate-800/80 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          
-          <div className="glass-panel p-6 rounded-xl border border-cyan-500/20 space-y-3">
-            <div className="p-3 w-fit rounded-lg bg-cyan-500/10 text-cyan-400">
-              <Zap className="w-6 h-6" />
-            </div>
-            <h3 className="font-display font-bold text-white text-lg">Cyber Jagrookta Diwas</h3>
+      {/* School Club Initiatives */}
+      <section className="space-y-4">
+        <h2 className="font-display font-bold text-xl text-white">
+          Club initiatives at Hamdard Public School
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="panel p-5 space-y-2">
+            <h3 className="font-semibold text-sm text-white">Cyber Jagrookta Diwas</h3>
             <p className="text-xs text-slate-300 leading-relaxed">
-              Every first Wednesday of the month, Hamdard Public School conducts dedicated cyber hygiene homeroom sessions to dissect current digital scams.
+              Observed on the first Wednesday of every month in accordance with CBSE and Ministry of Home Affairs guidelines. Homeroom sessions cover real scam examples and account safety.
             </p>
           </div>
 
-          <div className="glass-panel p-6 rounded-xl border border-emerald-500/20 space-y-3">
-            <div className="p-3 w-fit rounded-lg bg-emerald-500/10 text-emerald-400">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <h3 className="font-display font-bold text-white text-lg">The Student Cyber Safety Pledge</h3>
+          <div className="panel p-5 space-y-2">
+            <h3 className="font-semibold text-sm text-white">Cyber Safety Pledge</h3>
             <p className="text-xs text-slate-300 leading-relaxed">
-              Adopt the 7 principles outlined by the Ministry of Home Affairs / I4C. Commit to safe app downloads, zero OTP sharing, and responsible digital habits.
+              A student commitment formulated by the Indian Cyber Crime Coordination Centre (I4C). Tick the commitments and download a certificate of completion.
             </p>
           </div>
 
-          <div className="glass-panel p-6 rounded-xl border border-purple-500/20 space-y-3">
-            <div className="p-3 w-fit rounded-lg bg-purple-500/10 text-purple-400">
-              <Gamepad2 className="w-6 h-6" />
-            </div>
-            <h3 className="font-display font-bold text-white text-lg">Interactive Practice Zone</h3>
+          <div className="panel p-5 space-y-2">
+            <h3 className="font-semibold text-sm text-white">Practice Zone</h3>
             <p className="text-xs text-slate-300 leading-relaxed">
-              Put your reflexes to the test with our simulated fake SMS, WhatsApp chats, and phishing link analyzer. Master scam detection before you face real traps.
+              An interactive simulator where students practice identifying fake SMS, deceptive WhatsApp messages, imposter calls, and phishing links with instant explanations.
             </p>
           </div>
-
         </div>
       </section>
 
     </div>
   );
 }
-

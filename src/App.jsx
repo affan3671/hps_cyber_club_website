@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import EmergencyStrip from './components/EmergencyStrip';
-import CyberBackground from './components/CyberBackground';
 import ScrollToTop from './components/ScrollToTop';
 
 // Pages
@@ -18,21 +17,18 @@ import About from './pages/About';
 
 export default function App() {
   return (
-    <div className="relative min-h-screen bg-[#050B14] text-slate-100 flex flex-col font-sans selection:bg-[#00E5FF] selection:text-[#050B14]">
-      {/* Background Matrix & Digital Particle Ambience */}
-      <CyberBackground />
-
-      {/* Scroll to Top on Page Transitions */}
+    <div className="min-h-screen bg-[#050B14] text-slate-100 flex flex-col font-sans selection:bg-[#00E5FF] selection:text-[#050B14]">
+      {/* Scroll to Top on page navigation */}
       <ScrollToTop />
 
       {/* Emergency Strip (Helpline 1930 & cybercrime.gov.in) */}
       <EmergencyStrip />
 
-      {/* Sticky Main Navigation */}
+      {/* Navigation Bar */}
       <Navbar />
 
-      {/* Main Page Body */}
-      <main className="flex-grow relative z-10">
+      {/* Page Content */}
+      <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/threats" element={<Threats />} />
@@ -42,7 +38,6 @@ export default function App() {
           <Route path="/practice-zone" element={<PracticeZone />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
-          {/* Catch-all redirect to Home */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
@@ -52,4 +47,3 @@ export default function App() {
     </div>
   );
 }
-
