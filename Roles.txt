@@ -23,14 +23,14 @@ TABLE OF CONTENTS
 1. FACULTY ADVISORY & PATRONAGE
 ================================================================================
 
-1.1 CLUB PATRON (PRINCIPAL / VICE-PRINCIPAL)
+1.1 CLUB PATRON (PRINCIPAL / VICE-PRINCIPAL) - Mustafa Sir
     - Status: Ex-Officio Patron
     - Responsibility:
       * Overall institutional sanction and school policy alignment.
       * Final authority on inter-school competitions, guest speaker invitations,
         and external Ministry (MHA / I4C / CBSE) circular implementations.
 
-1.2 TEACHER COORDINATOR (FACULTY IN-CHARGE)
+1.2 TEACHER COORDINATOR (FACULTY IN-CHARGE) - Mustafa Sir
     - Eligibility: Senior Faculty, Department of Computer Science / IT
     - Key Responsibilities:
       * Direct supervision and mentorship of the Student Executive Council.
@@ -43,13 +43,13 @@ TABLE OF CONTENTS
 2. EXECUTIVE COUNCIL (STUDENT LEADERSHIP)
 ================================================================================
 
-2.1 STUDENT PRESIDENT (CLUB HEAD)
+2.1 STUDENT PRESIDENT (CLUB HEAD) - AFFAN ALI
     - Key Responsibilities:
       * Chief student spokesperson and leader of Cyber Shield HPS.
       * Coordinates with the Teacher Mentor for school-wide assembly addresses.
       * Delegates tasks across the Technical, Events, and Creative wings.
 
-2.2 STUDENT VICE-PRESIDENT (STUDENT VC / CO-HEAD)
+2.2 STUDENT VICE-PRESIDENT (STUDENT VC / CO-HEAD) - PENDING
     - Key Responsibilities:
       * Steps into the presidential duties in the absence of the President.
       * Leads internal project tracking and inter-wing collaboration.
@@ -57,7 +57,7 @@ TABLE OF CONTENTS
       * Assists in formulating the agenda for Cyber Jagrookta Diwas.
       * Prepares for presidential succession in the upcoming academic session.
 
-2.3 GENERAL SECRETARY (OPERATIONS & DOCUMENTATION)
+2.3 GENERAL SECRETARY (OPERATIONS & DOCUMENTATION) - PENDING
       * Maintains official club records, attendance rosters, and meeting minutes.
       * Compiles the Annual Cyber Safety Report for school archives.
       * Drafts official circulars, event announcements, and permission requests.
@@ -66,14 +66,14 @@ TABLE OF CONTENTS
 3. TECHNICAL & DEFENSE WING
 ================================================================================
 
-3.1 TECHNICAL & WEB LEAD
+3.1 TECHNICAL & WEB LEAD - ADEEBUR RAHMAN
       * Maintains the club website (React + Vite + Tailwind CSS static codebase).
       * Updates content data files (/src/data/*.js) with new scams, URLs, and alerts.
       * Ensures zero personal data collection across all interactive quizzes and tools.
       * Manages GitHub repository deployments (GitHub Pages / Vercel / Netlify).
     - Technical Skills: HTML, CSS, JavaScript, React, Git, web accessibility standards.
 
-3.2 CYBER DEFENSE & SIMULATION LEAD
+3.2 CYBER DEFENSE & SIMULATION LEAD - ALHAM & One More (idk the name)
     - Key Responsibilities:
       * Curates realistic scam scenarios (SMS, WhatsApp, fake portals, phishing links)
         for the "Spot the Scam" interactive simulator.
@@ -85,7 +85,7 @@ TABLE OF CONTENTS
 4. AWARENESS & EVENTS WING
 ================================================================================
 
-4.1 CYBER JAGROOKTA DIWAS (CJD) COORDINATOR
+4.1 CYBER JAGROOKTA DIWAS (CJD) COORDINATOR - MUSTAFA SIR
       * Orchestrates the school's monthly observance on the first Wednesday of
         every month as mandated by CBSE / Ministry of Home Affairs.
       * Collects feedback and common questions raised by students across sections.
@@ -95,7 +95,7 @@ TABLE OF CONTENTS
 5. MEDIA, DESIGN & EDITORIAL WING
 ================================================================================
 
-5.1 CREATIVE & DESIGN LEAD
+5.1 CREATIVE & DESIGN LEAD - YUSUF 
       * Creates high-impact visual infographics, notice-board posters, and flyers.
       * Standardizes the visual identity (neon cyan, electric green, dark navy theme).
       * Designs presentation slide decks and digital badge graphics for the club.
@@ -111,11 +111,11 @@ TABLE OF CONTENTS
 6. CLASS AMBASSADORS & PEER SENTINELS
 ================================================================================
 
-6.1 SENIOR WING AMBASSADORS
+6.1 SENIOR WING AMBASSADORS - PENDING
     - Role: First point of peer support for senior students regarding account
       takeover, gaming cheats, phishing, and cyberbullying.
 
-6.2 MIDDLE WING AMBASSADORS
+6.2 MIDDLE WING AMBASSADORS - PENDING
     - Role: Promoting safe smartphone usage, social media privacy controls,
       anti-cyberbullying vigilance, and reporting suspicious group links.
 
