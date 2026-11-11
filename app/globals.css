@@ -1,0 +1,213 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&display=swap");
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: "Space Grotesk", var(--font-space-grotesk), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Space Grotesk", var(--font-space-grotesk), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+  --color-cyber-pink: #ff0055;
+  --color-cyber-pink-hover: #ff1a6b;
+  --color-void: #060709;
+  --color-void-panel: #0a0b0e;
+  --color-void-card: #0e1015;
+  --color-void-elevated: #151820;
+}
+
+:root {
+  --background: #060709;
+  --foreground: #f4f4f5;
+  --cyber-pink: #ff0055;
+  --font-space-grotesk: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-jetbrains-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Explicit Global Font Enforcement & Mobile Touch Safety */
+html,
+body {
+  font-family: "Space Grotesk", var(--font-space-grotesk), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  background-color: #060709;
+  color: #f4f4f5;
+  color-scheme: dark;
+  scroll-behavior: auto; /* Let Lenis handle smooth scrolling on desktop */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure all interactive controls have instant response and clean pointer behavior */
+button,
+a,
+input,
+select,
+textarea,
+[role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+/* Enforce Space Grotesk across all display, headings, and sans elements */
+.font-display,
+.font-sans,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Space Grotesk", var(--font-space-grotesk), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Enforce JetBrains Mono across all mono, code, telemetry, and terminal elements */
+.font-mono,
+code,
+pre,
+kbd,
+samp,
+input.font-mono {
+  font-family: "JetBrains Mono", var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace !important;
+}
+
+/* Custom Selection */
+::selection {
+  background-color: #ff0055;
+  color: #ffffff;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #060709;
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff0055;
+}
+
+/* Technical Blueprint & Margin Utilities */
+.blueprint-border {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.blueprint-border-pink {
+  border: 1px solid #ff0055;
+}
+
+.blueprint-hairline-x {
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.08);
+  width: 100%;
+}
+
+.blueprint-hairline-y {
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.08);
+  height: 100%;
+}
+
+/* Registration Crosshair */
+.crosshair-corner {
+  position: relative;
+}
+
+.crosshair-corner::before,
+.crosshair-corner::after {
+  content: "";
+  position: absolute;
+  background-color: #71717a;
+  pointer-events: none;
+}
+
+/* Zebra Barcode Pattern (from technical lower-third reference) */
+.zebra-hash {
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.15) 0px,
+    rgba(255, 255, 255, 0.15) 2px,
+    transparent 2px,
+    transparent 5px
+  );
+}
+
+.zebra-hash-pink {
+  background: repeating-linear-gradient(
+    90deg,
+    #ff0055 0px,
+    #ff0055 2px,
+    transparent 2px,
+    transparent 5px
+  );
+}
+
+.zebra-hash-vert {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.12) 0px,
+    rgba(255, 255, 255, 0.12) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+}
+
+/* Lenis Recommended CSS */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Technical Frame Corners (Overshooting lines as in reference image) */
+.overshoot-frame {
+  position: relative;
+}
+
+.overshoot-frame::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.overshoot-frame::after {
+  content: "";
+  position: absolute;
+  left: -8px;
+  right: -8px;
+  top: 0;
+  bottom: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
