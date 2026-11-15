@@ -14,7 +14,7 @@ interface HackedTextProps {
   characters?: string;
 }
 
-const DEFAULT_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!<>-_\\/[]{}—=+*^?#";
+const DEFAULT_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!<>-_\\/[]{}~=+*^?#";
 
 export default function HackedText({
   text,

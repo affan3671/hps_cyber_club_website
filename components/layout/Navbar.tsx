@@ -33,11 +33,11 @@ export default function Navbar() {
           href="#"
           className="group flex items-center gap-3 relative cursor-pointer"
         >
-          <div className="border border-white/20 px-2.5 py-1 bg-[#0a0b0e] group-hover:border-[#ff0055] transition-colors">
+          <div className="w-[124px] shrink-0 border border-white/20 px-2.5 py-1 bg-[#0a0b0e] group-hover:border-[#ff0055] transition-colors">
             <div className="text-[10px] font-mono text-[#ff0055] font-bold tracking-wider">
               HPS
             </div>
-            <div className="text-base font-display font-bold tracking-tight text-white flex items-center gap-1">
+            <div className="text-base font-display font-bold tracking-tight text-white flex items-center gap-1 overflow-hidden whitespace-nowrap">
               <HackedText text="CYBER SHIELD" />
             </div>
           </div>

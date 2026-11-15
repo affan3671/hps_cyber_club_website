@@ -4,10 +4,11 @@ import React, { useState } from "react";
 import confetti from "canvas-confetti";
 import { PLEDGE_RULES } from "../../data/cyberData";
 import HackedText from "../effects/HackedText";
-import { ShieldCheck, Check, Copy, CheckCheck } from "lucide-react";
+import { ShieldCheck, Check, Copy, CheckCheck, Lock, Sparkles } from "lucide-react";
 
 export default function PledgeSection() {
-  const [checkedRules, setCheckedRules] = useState<Record<string, boolean>>({});
+  const [checkedCount, setCheckedCount] = useState<number>(0);
+  const [lastRuleDopamine, setLastRuleDopamine] = useState<boolean>(false);
   const [studentName, setStudentName] = useState("");
   const [studentGrade, setStudentGrade] = useState("");
   const [issuedCredential, setIssuedCredential] = useState<{
@@ -17,16 +18,51 @@ export default function PledgeSection() {
   } | null>(null);
   const [copied, setCopied] = useState(false);
 
-  const toggleRule = (id: string) => {
-    setCheckedRules((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+  const triggerLastRuleFireworks = (targetEl: HTMLElement | null) => {
+    try {
+      const rect = targetEl?.getBoundingClientRect();
+      const x = rect ? (rect.left + rect.width / 2) / window.innerWidth : 0.5;
+      const y = rect ? (rect.top + rect.height / 2) / window.innerHeight : 0.7;
+
+      // Subtle, contained firework burst lasting ~0.7 seconds
+      confetti({
+        particleCount: 30,
+        spread: 360,
+        startVelocity: 16,
+        ticks: 42, // ~0.7s at 60fps
+        origin: { x, y },
+        colors: ["#ff0055", "#ff4081", "#ffd700", "#ffffff"],
+        scalar: 0.75,
+        shapes: ["circle"],
+        disableForReducedMotion: true,
+      });
+    } catch {
+      // fallback
+    }
   };
 
-  const allRulesChecked =
-    PLEDGE_RULES.length > 0 &&
-    PLEDGE_RULES.every((rule) => !!checkedRules[rule.id]);
+  const handleRuleClick = (
+    index: number,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    if (index === checkedCount) {
+      // Confirming the next sequential checklist step
+      const nextCount = checkedCount + 1;
+      setCheckedCount(nextCount);
+
+      // On checking the final pledge option (7 of 7)
+      if (nextCount === PLEDGE_RULES.length) {
+        triggerLastRuleFireworks(e.currentTarget);
+        setLastRuleDopamine(true);
+        setTimeout(() => setLastRuleDopamine(false), 700);
+      }
+    } else if (index < checkedCount) {
+      // Unchecking/rewinding back to this step
+      setCheckedCount(index);
+    }
+  };
+
+  const allRulesChecked = checkedCount === PLEDGE_RULES.length;
 
   const handleCommitPledge = (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,18 +107,18 @@ export default function PledgeSection() {
   return (
     <section
       id="pledge"
-      className="relative px-4 sm:px-8 lg:px-24 py-24 border-b border-white/10 bg-[#08090d]"
+      className="relative px-4 sm:px-8 lg:px-20 py-24 border-b border-white/10 bg-[#08090d]"
     >
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 border-b border-white/10">
-        <div className="space-y-2">
+        <div className="flex-1 min-w-0 space-y-2">
           <div className="flex items-center gap-2 text-xs font-mono text-[#ff0055]">
             <span>{"// STATUTORY_06"}</span>
             <span className="text-zinc-600">/</span>
             <span>MHA_I4C_PLEDGE</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-display font-bold uppercase tracking-tight text-white">
-            <HackedText text="THE STUDENT CYBER SAFETY PLEDGE" />
+          <h2 className="text-3xl sm:text-4xl lg:text-[2.65rem] xl:text-[2.75rem] 2xl:text-5xl font-display font-bold uppercase tracking-tight text-white xl:whitespace-nowrap">
+            <HackedText text="THE STUDENT CYBER SAFETY PLEDGE" className="xl:whitespace-nowrap" />
           </h2>
           <p className="text-zinc-400 font-sans max-w-xl text-sm sm:text-base">
             Formalized in alignment with the Ministry of Home Affairs (MHA) and Indian Cyber Crime
@@ -90,55 +126,120 @@ export default function PledgeSection() {
           </p>
         </div>
 
-        <div className="text-xs font-mono text-zinc-500 hidden sm:block">
+        <div className="text-xs font-mono text-zinc-500 hidden sm:block shrink-0 text-right">
           MANDATE: NATIONAL CYBER HYGIENE CITIZEN CREED
         </div>
       </div>
 
-      <div className="mt-12 max-w-4xl mx-auto space-y-12">
-        {/* 7-Point Interactive Checklist */}
+      <div className="mt-12 max-w-5xl mx-auto space-y-12">
+        {/* 7-Point Step-by-Step Interactive Checklist */}
         <div className="space-y-4">
           <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider flex items-center justify-between">
-            <span>COMMITMENT CHECKLIST (ALL 7 REQUIRED)</span>
-            <span className="text-[#ff0055]">
-              {Object.values(checkedRules).filter(Boolean).length} / {PLEDGE_RULES.length} CONFIRMED
+            <span>COMMITMENT CHECKLIST (CONFIRM STEP-BY-STEP)</span>
+            <span
+              className={
+                allRulesChecked
+                  ? "text-emerald-400 font-bold"
+                  : "text-[#ff0055] font-semibold"
+              }
+            >
+              {checkedCount} / {PLEDGE_RULES.length} CONFIRMED
             </span>
           </div>
 
           <div className="space-y-3">
-            {PLEDGE_RULES.map((rule) => {
-              const isChecked = !!checkedRules[rule.id];
+            {PLEDGE_RULES.map((rule, index) => {
+              const isChecked = index < checkedCount;
+              const isCurrent = index === checkedCount;
+              const isLocked = index > checkedCount;
+              const isLast = index === PLEDGE_RULES.length - 1;
+              const showDopamine = isLast && lastRuleDopamine;
 
               return (
                 <button
                   key={rule.id}
                   type="button"
-                  onClick={() => toggleRule(rule.id)}
-                  className={`w-full text-left p-4 border cursor-pointer transition-all flex items-start gap-4 touch-manipulation active:bg-white/10 ${
-                    isChecked
-                      ? "border-[#ff0055] bg-[#0c0e14]"
-                      : "border-white/10 bg-[#0a0b0e] hover:border-white/20 active:border-[#ff0055]"
+                  onClick={(e) => handleRuleClick(index, e)}
+                  disabled={isLocked}
+                  aria-disabled={isLocked}
+                  className={`w-full text-left p-4 border transition-all flex items-start gap-4 touch-manipulation relative overflow-hidden ${
+                    showDopamine
+                      ? "border-[#ff0055] bg-[#ff0055]/15 ring-2 ring-[#ff0055] shadow-[0_0_25px_rgba(255,0,85,0.4)] scale-[1.01]"
+                      : isChecked
+                      ? "border-[#ff0055] bg-[#0c0e14] cursor-pointer active:bg-white/10"
+                      : isCurrent
+                      ? "border-white/30 bg-[#0a0b0e] hover:border-[#ff0055] hover:bg-white/[0.03] cursor-pointer shadow-[0_0_15px_rgba(255,0,85,0.08)] active:border-[#ff0055]"
+                      : "border-white/5 bg-[#06070a] opacity-40 cursor-not-allowed"
                   }`}
                 >
                   <div
-                    className={`w-5 h-5 border mt-0.5 flex items-center justify-center shrink-0 transition-colors ${
-                      isChecked
+                    className={`w-5 h-5 border mt-0.5 flex items-center justify-center shrink-0 transition-all ${
+                      showDopamine
+                        ? "border-[#ff0055] bg-[#ff0055] text-white scale-110"
+                        : isChecked
                         ? "border-[#ff0055] bg-[#ff0055] text-white"
-                        : "border-white/20 bg-white/5"
+                        : isCurrent
+                        ? "border-[#ff0055]/60 bg-[#ff0055]/10 text-[#ff0055]"
+                        : "border-white/10 bg-transparent text-zinc-600"
                     }`}
                   >
-                    {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                    {isChecked ? (
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    ) : isLocked ? (
+                      <Lock className="w-2.5 h-2.5 text-zinc-600" />
+                    ) : (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#ff0055] animate-ping" />
+                    )}
                   </div>
 
-                  <div className="space-y-1 font-mono text-xs flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-zinc-500 font-bold">{rule.code}</span>
-                      <span className="text-zinc-200 font-sans text-xs sm:text-sm">
+                  <div className="space-y-1.5 font-mono text-xs flex-1 min-w-0">
+                    <div className="flex items-baseline gap-2.5">
+                      <span
+                        className={`font-bold shrink-0 ${
+                          isChecked
+                            ? "text-[#ff0055]"
+                            : isCurrent
+                            ? "text-zinc-300"
+                            : "text-zinc-600"
+                        }`}
+                      >
+                        {rule.code}
+                      </span>
+                      <span
+                        className={`font-sans text-xs sm:text-sm leading-relaxed ${
+                          isChecked
+                            ? "text-white font-medium"
+                            : isCurrent
+                            ? "text-zinc-200"
+                            : "text-zinc-500"
+                        }`}
+                      >
                         {rule.rule}
                       </span>
                     </div>
-                    <div className="text-[11px] text-zinc-500">
-                      RATIONALE: {rule.technicalReason}
+
+                    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[11px] text-zinc-500 pt-0.5">
+                      <span>RATIONALE: {rule.technicalReason}</span>
+
+                      {/* Step status label */}
+                      {showDopamine ? (
+                        <span className="inline-flex items-center gap-1 text-[10px] text-emerald-400 font-bold tracking-wider shrink-0">
+                          <Sparkles className="w-3 h-3 text-emerald-400" />
+                          ALL 7 PLEDGES COMPLETED!
+                        </span>
+                      ) : isCurrent ? (
+                        <span className="text-[10px] text-[#ff0055] font-semibold tracking-wider shrink-0">
+                          [STEP {index + 1} — CLICK TO CONFIRM]
+                        </span>
+                      ) : isLocked ? (
+                        <span className="text-[10px] text-zinc-600 shrink-0">
+                          LOCKED (COMPLETE STEP {checkedCount + 1} FIRST)
+                        </span>
+                      ) : (
+                        <span className="text-[10px] text-emerald-400 font-semibold shrink-0">
+                          CONFIRMED
+                        </span>
+                      )}
                     </div>
                   </div>
                 </button>

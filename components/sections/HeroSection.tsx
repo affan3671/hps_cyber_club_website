@@ -18,10 +18,6 @@ export default function HeroSection() {
           <span className="text-zinc-600">{"//"}</span>
           <span className="text-zinc-300">STUDENT CYBER DEFENSE WING</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400" />
-          <span className="text-zinc-300">MHA & CBSE COMPLIANT</span>
-        </div>
       </div>
 
       {/* Main Asymmetric Editorial Grid */}
@@ -31,7 +27,9 @@ export default function HeroSection() {
           {/* Status Capsule */}
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/15 text-xs font-mono">
             <span className="w-1.5 h-1.5 rounded-full bg-[#ff0055]" />
-            <span className="text-zinc-300">CYBER AWARENESS & SAFETY // GRADES 6-12</span>
+            <span className="text-zinc-300">
+              CYBER AWARENESS & SAFETY // GRADES 6-12
+            </span>
           </div>
 
           {/* Primary Brutalist Headline with Hacked Scramble Effect */}
@@ -49,8 +47,9 @@ export default function HeroSection() {
 
           {/* Student-Friendly Description */}
           <p className="max-w-xl text-base sm:text-lg text-zinc-300 font-sans leading-relaxed">
-            Learn to spot phishing tricks, identify fake social media accounts, protect your game logins,
-            and know the exact 5 emergency steps to take if you or your family ever get targeted by a scam.
+            Learn to spot phishing tricks, identify fake social media accounts,
+            protect your game logins, and know the exact 5 emergency steps to
+            take if you or your family ever get targeted by a scam.
           </p>
 
           {/* Action Anchors */}
@@ -136,20 +135,30 @@ export default function HeroSection() {
             <div className="grid grid-cols-2 gap-3 pt-1 font-mono">
               <div className="p-3 border border-white/10 bg-white/[0.02]">
                 <div className="text-[10px] text-zinc-500">PRACTICE TESTS</div>
-                <div className="text-xl font-bold text-white mt-0.5">1,480+</div>
-                <div className="text-[10px] text-emerald-400 mt-0.5">● Solved by Students</div>
+                <div className="text-xl font-bold text-white mt-0.5">
+                  1,480+
+                </div>
+                <div className="text-[10px] text-emerald-400 mt-0.5">
+                  ● Solved by Students
+                </div>
               </div>
               <div className="p-3 border border-white/10 bg-white/[0.02]">
                 <div className="text-[10px] text-zinc-500">MEMBERS PLEDGED</div>
-                <div className="text-xl font-bold text-white mt-0.5">2,150+</div>
-                <div className="text-[10px] text-zinc-400 mt-0.5">● Active Sentinels</div>
+                <div className="text-xl font-bold text-white mt-0.5">
+                  2,150+
+                </div>
+                <div className="text-[10px] text-zinc-400 mt-0.5">
+                  ● Active Sentinels
+                </div>
               </div>
             </div>
 
             {/* Bottom Barcode / Zebra Hash Lines (as seen in the reference lower-third) */}
             <div className="flex items-center justify-between pt-1">
               <div className="h-3 w-28 zebra-hash opacity-60" />
-              <div className="text-[10px] font-mono text-zinc-500">HAMDARD PUBLIC SCHOOL</div>
+              <div className="text-[10px] font-mono text-zinc-500">
+                HAMDARD PUBLIC SCHOOL
+              </div>
             </div>
           </div>
         </div>
@@ -160,7 +169,8 @@ export default function HeroSection() {
         <div className="flex items-center gap-2">
           <AlertTriangle className="w-4 h-4 text-[#ff0055] shrink-0" />
           <span className="text-zinc-300">
-            Emergency Notice: If money was unauthorizedly sent from a bank or UPI app, call Helpline 1930 within 2 hours.
+            Emergency Notice: If money was unauthorizedly sent from a bank or
+            UPI app, call Helpline 1930 within 2 hours.
           </span>
         </div>
         <div className="flex items-center gap-2 text-[11px] shrink-0">
